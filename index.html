@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+
+<html lang="ja"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Lingerie Customizer v2.8.1 PWA — 顔の方向性・魅力度 改善版</title>
+<meta name="theme-color" content="#282234"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="LC カスタマイザー"/>
+<meta name="description" content="ランジェリーのデザイン・展示シーンを抽選するカスタマイザー"/>
+<link rel="manifest" href="./manifest.webmanifest"/>
+<link rel="apple-touch-icon" href="./apple-touch-icon.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png"/>
+
+<style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:#f6f4f7;color:#302b37}*{box-sizing:border-box}body{margin:0}header{background:#282234;color:#fff;padding:22px 16px}header .wrap{padding:0}h1{font-size:22px;margin:0 0 4px}header p{font-size:13px;color:#d9d0e3;margin:0}.wrap{max-width:1040px;margin:auto;padding:16px}.panel{background:#fff;border:1px solid #e5dfe8;border-radius:13px;margin-bottom:13px;padding:15px}.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.row>*{flex:1}.row button{flex:0 0 auto}label{font-size:13px;font-weight:600}select,input,textarea{font:inherit;border:1px solid #d9d2df;border-radius:8px;padding:8px;background:#fff;min-width:0;width:100%}input[type=checkbox]{width:auto;accent-color:#694e8c}button{border:0;background:#684d88;color:white;padding:10px 14px;font:inherit;border-radius:9px;cursor:pointer}button.secondary{background:#ece7f2;color:#3c3050}button:hover{filter:brightness(.96)}.small{font-size:12px;color:#766d80}.hint{color:#6b5c77;font-size:12px}.pill{background:#f0ebf5;border-radius:20px;padding:4px 9px;font-size:12px;color:#624879}.bar{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1 1 135px}.section{border:1px solid #e6e0e9;border-radius:11px;margin:12px 0;overflow:hidden;background:#fff}.section>summary{padding:13px;cursor:pointer;font-weight:700;background:#fcfafc}.section .inner{padding:12px}.fieldgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.field{padding:10px;background:#faf8fc;border:1px solid #eee9f0;border-radius:9px}.head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:6px}.lock{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:500;color:#62566a;white-space:nowrap}.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-top:12px}.typecard{border:2px solid #e6dfeb;border-radius:12px;overflow:hidden;cursor:pointer;background:white;display:flex;flex-direction:column;transition:border-color .1s;position:relative}.typecard.selected{border-color:#71528e;background:#f6f1fb;box-shadow:0 0 0 1px #71528e inset}.typecard:focus-visible{outline:3px solid #b39dd0}.typecard .art{height:112px;background:linear-gradient(120deg,#faf8fb,#f1ecf5);display:flex;align-items:center;justify-content:center}.typecard svg{width:95%;height:105px}.typecard .name{font-size:13px;font-weight:700;padding:7px 8px 2px}.typecard .sub{font-size:11px;color:#756e7b;padding:0 8px 9px;flex:1}.typecard .check{position:absolute;top:7px;right:7px;background:#654c83;color:white;font-size:11px;border-radius:20px;padding:3px 6px;display:none}.typecard.selected .check{display:block}.controls{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.controls button{font-size:12px;padding:7px 10px}.group-title{font-size:16px;margin:2px 0 4px}.output{white-space:pre-wrap;word-break:break-word;background:#faf8fb;border:1px solid #ebe5ee;border-radius:8px;padding:14px;max-height:600px;overflow:auto;font-size:13px;line-height:1.6}.search{position:sticky;top:0;background:#f6f4f7;padding:9px 0;z-index:4}.token{display:inline-block;border-radius:20px;background:#f1edf5;padding:4px 9px;font-size:12px;color:#55446a}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}textarea{min-height:68px}#notice{font-size:12px;color:#9d6224}.figcaption{font-size:12px;color:#807587;margin-top:4px}.footer{font-size:12px;color:#776e7f;margin:14px 0}.preset{padding:8px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;gap:10px}.preset span{font-size:12px}.preset .row{flex:0}.preset button{padding:6px 8px;font-size:12px}@media(max-width:640px){.bar{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap{padding:11px}.two{grid-template-columns:1fr}h1{font-size:20px}}
+
+.fieldcontent{display:flex;align-items:center;gap:9px}.fieldchoice{flex:1;min-width:0}.detail-thumb{width:70px;height:62px;flex:0 0 70px;border:1px solid #e6dfea;background:#f4eff6;border-radius:7px;display:flex;align-items:center;justify-content:center;overflow:hidden}.detail-thumb svg{width:65px;height:61px}.fieldvisual{min-height:122px}.section[open]>summary{background:#f5eff9}.section>summary:hover{background:#f6f1f9}
+@media(max-width:640px){.detail-thumb{width:62px;flex-basis:62px}}
+
+.swatch-tools{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;gap:12px}.swatch-tools button{padding:6px 10px;font-size:12px}.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px;padding:10px}.swatch-choice{display:flex;flex-direction:column;gap:5px;align-items:stretch;background:#fff;color:#30283a;border:2px solid #e6dfeb;padding:6px;border-radius:10px;min-width:0}.swatch-choice.active{border-color:#71528e;background:#f3edf9}.swatch-art{display:block;height:74px}.swatch-art svg{height:100%;width:100%}.swatch-name{text-align:center;font-size:12px;overflow-wrap:anywhere;font-weight:600}.swatch-preview svg{width:100%;height:100%}.swatch-section summary{font-size:14px}@media(max-width:600px){.swatch-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.swatch-name{font-size:11px}.swatch-art{height:58px}}
+.pool-panel{border:1px solid #ded4e6;border-radius:12px;padding:14px;background:#fcfaff}
+.pool-panel h3{margin:0 0 5px;font-size:16px}.pool-head{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.pool-head>div{flex:1;min-width:180px}.pool-summary{font-size:12px;color:#665875;margin:8px 0}
+.pool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:8px;margin-top:10px}
+.pool-option{display:flex;gap:8px;align-items:center;border:1px solid #e4deea;background:#fff;border-radius:9px;padding:7px;min-width:0}
+.pool-option.off{opacity:.66;background:#faf8fa}.pool-option input[type=checkbox]{width:17px;height:17px;flex:0 0 auto}
+.pool-option .pool-label{font-size:12px;flex:1;overflow-wrap:anywhere;min-width:0}
+.pool-option select{width:62px;flex:0 0 62px;padding:5px;font-size:12px}
+.pool-option .mini-art{width:45px;height:43px;flex:0 0 45px}.pool-option .mini-art svg{width:100%;height:100%}
+.pool-note{font-size:12px;color:#786d80}.pool-message{margin:9px 0;color:#8b4e21;font-size:13px;min-height:1em}
+.pool-actions{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.pool-actions button{font-size:12px;padding:7px 9px}
+@media(max-width:600px){.pool-grid{grid-template-columns:1fr}.pool-option .mini-art{width:40px;flex-basis:40px}}
+
+.quick-group{margin:12px 0}.quick-group h3{font-size:14px;margin:0 0 8px}.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:9px}.quick-card{background:#fff;color:#382d43;border:2px solid #e4ddeb;border-radius:11px;padding:8px 5px;display:flex;flex-direction:column;align-items:center;gap:5px;min-height:106px}.quick-card.active{border-color:#6a4a8b;background:#f5effb}.quick-card .quick-icon{font-size:31px}.quick-card span:last-child{font-size:12px;text-align:center}.quick-header{display:flex;gap:12px;align-items:center;justify-content:space-between}.quick-header label{font-size:12px}
+</style><style>
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,295px),1fr));gap:12px;margin:12px 0}.compare-card{border:1px solid #dcd4e5;border-radius:12px;padding:13px;background:#fff;min-width:0}.compare-card.selected{border:2px solid #6c438e;background:#faf5ff}.compare-card h4{margin:0 0 8px}.compare-card .summary{font-size:13px;line-height:1.65}.compare-card .summary b{color:#47315a}.compare-card .actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.compare-card button{font-size:12px;padding:7px 9px}.compare-card .num{font-size:11px;color:#6b6176}.import-btn{cursor:pointer;border-radius:7px;padding:9px 12px;background:#ede8f2;font-size:13px}.new-label{font-size:11px;color:#805da6}.compare-card .tiny{font-size:11px;color:#777}
+</style>
+<style>
+.v17-dashboard{border:2px solid #d5c6e2;background:linear-gradient(150deg,#fff,#faf7ff)}.v17-dashboard h2{margin:0 0 6px;font-size:19px}.v17-status{font-size:12px;color:#655477;margin:4px 0 13px}.v17-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:10px}.v17-field{border:1px solid #e7dfee;border-radius:10px;background:white;padding:10px}.v17-field label{display:block;margin-bottom:7px}.v17-field .v17-inputrow{display:flex;gap:6px;align-items:center}.v17-field select{min-width:0;flex:1}.v17-field .v17-pin{display:flex;align-items:center;gap:4px;white-space:nowrap;font-size:12px}.v17-field .v17-pin input{width:auto}.v17-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}.v17-actions button{flex:1 1 125px}.v17-nav{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.v17-nav button{background:#eee8f3;color:#422d5b;font-size:12px;padding:9px}.v17-hide{display:none!important}.v17-head{display:flex;justify-content:space-between;align-items:center;gap:7px;margin-bottom:8px}.v17-head button{font-size:12px;padding:6px 10px}.v17-inform{padding:10px;background:#f6f1fb;border-radius:8px;font-size:12px;color:#584b65;margin:12px 0}.v17-compact .search{position:static}@media(max-width:640px){.v17-fields{grid-template-columns:1fr 1fr;gap:7px}.v17-field{padding:8px}.v17-field label{font-size:12px}.v17-field select{font-size:12px;padding:7px 4px}.v17-field .v17-inputrow{flex-wrap:wrap}.v17-nav{display:grid;grid-template-columns:1fr 1fr}.v17-nav button{width:100%}}@media(max-width:365px){.v17-fields{grid-template-columns:1fr}}
+</style><style>
+.v18-tabs{display:flex;gap:6px;overflow-x:auto;padding:5px 0 10px}.v18-tabs button{white-space:nowrap;flex:0 0 auto}.v18-tabs button.active{background:#292137;color:white}.v18-toolbar{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}.v18-report{font-size:13px;line-height:1.65;background:#fbf9fd;border:1px solid #ddd7e6;padding:12px;border-radius:10px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px;overflow-y:auto}.v18-meta{font-size:12px;color:#666;display:block;margin-bottom:6px}.v18-before{white-space:pre-wrap;line-height:1.6;font-size:13px;padding:12px;background:#f6f3f9;border-radius:9px}.v18-status{font-size:12px;color:#62566b}.v18-tabs button,.v18-toolbar button{min-height:43px}
+
+/* v2.2 interactive color gallery */
+.lc-palette{border:2px solid #ddd0e8;background:linear-gradient(165deg,#fff,#faf6ff)}
+.lc-palette-header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.lc-palette-header h2{margin:0;font-size:19px}.lc-tabs{display:flex;gap:8px;margin:12px 0}
+.lc-tabs button{flex:1;background:#eee8f3;color:#49355a}.lc-tabs button.active{background:#684d88;color:white}
+.lc-selection{display:flex;gap:12px;align-items:center;padding:10px;background:#f8f4fa;border-radius:11px;margin:10px 0;min-height:74px}
+.lc-selection .lc-large{width:72px;height:54px;border-radius:9px;border:1px solid #a9a0af;flex:0 0 72px}
+.lc-selection .lc-label{font-size:13px;line-height:1.65;flex:1;min-width:0}
+.lc-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.lc-controls select{flex:1;min-width:150px}.lc-controls input{flex:1;min-width:145px}
+.lc-controls label{display:flex;align-items:center;gap:5px;white-space:nowrap}.lc-controls button{font-size:12px}
+.lc-color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(106px,1fr));gap:8px;max-height:425px;overflow:auto;padding:4px 2px}
+.lc-color{border:2px solid #e7e0ed;background:white;color:#30283a;border-radius:11px;padding:6px;min-height:92px;display:flex;flex-direction:column;gap:6px;cursor:pointer;align-items:stretch}
+.lc-color.active{border-color:#69448c;box-shadow:0 0 0 2px #e5d5f2 inset;background:#f9f3ff}
+.lc-color-sample{height:48px;border:1px solid #b9afbc;border-radius:7px;display:block;position:relative}
+.lc-color-name{font-size:11px;line-height:1.35;text-align:center;overflow-wrap:anywhere}
+.lc-palette-footer{margin-top:10px;font-size:12px;color:#675975}
+@media(max-width:600px){.lc-color-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-height:390px}.lc-color{min-height:84px}.lc-color-sample{height:43px}}
+</style><style>.lc-person-tabs{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}.lc-person-tabs button{flex:1;min-width:85px;background:#eee7f3;color:#4b345a}.lc-person-tabs button.active{background:#694c88;color:white}.lc-person-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.lc-person-field{border:1px solid #e7deeb;border-radius:9px;padding:8px;background:#fcfafd}.lc-person-field label{display:block;margin-bottom:5px}.lc-person-field select{font-size:13px}.lc-person-field .subrow{display:flex;align-items:center;justify-content:space-between;margin-top:5px;gap:5px}.lc-person-field .subrow label{font-weight:400;white-space:nowrap}.lc-person-field .subrow input{width:auto}.lc-person-field .subrow button{padding:4px 8px;font-size:11px}.lc-person-group{margin:8px 0;border:1px solid #e8e0ec;border-radius:10px;padding:9px}.lc-person-group summary{cursor:pointer;font-weight:650;padding:5px}.lc-person-identity{background:#f3ecf8;border-radius:9px;padding:10px;margin:10px 0;font-size:13px}</style></head><body><header><div class="wrap"><h1>Lingerie Customizer <span style="font-weight:400;font-size:15px">v2.8.1</span></h1><p>人物別デザイン・可愛い系と美人系を24方向に再編</p></div></header><div class="wrap"><p class="small" style="margin:8px 2px">v1.9 整合性改善版｜よく使う設定は上部にまとめ、詳細は必要なときだけ開けます。</p></div><div id="v19banner" style="max-width:940px;margin:12px auto;padding:12px 15px;border:1px solid #ded7e7;background:#fff;border-radius:12px;font-size:14px"><strong>v2.8.1：91項目／日本人女性・20〜39歳に固定</strong><div style="font-size:12px;color:#67606f;margin-top:4px">衣装の基本タイプに合わせて細部を抽選。固定条件の衝突は変更せず警告します。</div><div id="v19warnings" role="status" aria-live="polite" style="color:#875522;font-size:12px;margin-top:5px"></div></div><main class="wrap v17-compact"><section aria-label="クイック設定" class="panel v17-dashboard" id="v17dashboard"><h2>⚡ よく使う設定</h2><div class="v17-status" id="v17status">設定を読み込み中</div><div class="v17-fields" id="v17fields"></div><div class="v17-actions"><button onclick="roll('all');v17Sync()" type="button">🎲 すべて再抽選</button><button class="secondary" onclick="generate();v17Open('output')" type="button">構想を生成</button><button class="secondary" onclick="v17Open('comparePanel');makeComparisons()" type="button">複数案を比較</button></div><div class="v17-inform">🔒 チェックした項目は固定。ランダムのままなら抽選対象です。画像や細部構造は下のカテゴリから設定できます。</div><div class="v17-nav"><button onclick="v17Open('bra')" type="button">ブラの画像一覧</button><button onclick="v17Open('pant')" type="button">ショーツの画像一覧</button><button onclick="document.getElementById('lcPalette').scrollIntoView({behavior:'smooth',block:'start'})" type="button">🎨 色見本</button><button onclick="v17Open('fabric')" type="button">素材・装飾</button><button onclick="v17Open('sceneShortcuts')" type="button">人物・会場</button><button onclick="v25OpenPose()" type="button">📸 紹介ポーズ</button><button onclick="v17Open('details')" type="button">全91項目</button><button onclick="v17Open('pool-section')" type="button">除外・出現率</button></div></section>
+<section class="panel" id="v27stylePanel" aria-label="装飾具合と衣装の大胆さ"><h2 class="group-title">🎛️ 任意スタイル指定 <span class="pill">NEW v2.7</span></h2><p class="hint">どちらも「指定なし」が初期値。指定しなければ従来の抽選ロジックを変更しません。色は常に従来どおり自由に抽選します。</p><div class="two"><label>装飾具合<select id="v27decor" onchange="v27Change('decor',this.value)"><option value="">指定なし（従来ランダム）</option><option value="1">Lv.1｜ベーシック</option><option value="2">Lv.2｜シンプル可愛い</option><option value="3">Lv.3｜標準</option><option value="4">Lv.4｜華やか</option><option value="5">Lv.5｜豪華・独創的</option></select></label><label>衣装の大胆さ<select id="v27bold" onchange="v27Change('bold',this.value)"><option value="">指定なし（従来ランダム）</option><option value="1">Lv.1｜控えめ</option><option value="2">Lv.2｜やや控えめ</option><option value="3">Lv.3｜標準</option><option value="4">Lv.4｜大胆</option><option value="5">Lv.5｜非常に大胆</option></select></label></div><p class="small" id="v27notice" role="status">装飾と大胆さは独立。選択範囲内で素材・装飾品・形状をランダム抽選します。🔒固定条件は変更しません。</p><button type="button" class="secondary" onclick="v27Clear()">両方の指定を解除</button></section><section class="panel lc-palette" id="lcPalette"><div class="lc-palette-header"><h2>🎨 色見本から選ぶ <span class="pill">NEW v2.2</span></h2><span class="small">主色126色・副色74候補</span></div><p class="hint">色をタップして選択。固定は任意です。固定しなければ再抽選で変わります。</p><div class="lc-tabs" role="tablist" aria-label="配色選択"><button type="button" id="lcMainTab" onclick="lcSetTab('主色')">主色</button><button type="button" id="lcSubTab" onclick="lcSetTab('副色')">副色</button></div><div id="lcCurrent" class="lc-selection" aria-live="polite"></div><div class="lc-controls"><select id="lcColorGroup" aria-label="色系統" onchange="lcRenderColors()"></select><input id="lcColorSearch" type="search" placeholder="色名で検索" aria-label="色名で検索" oninput="lcRenderColors()"/><label><input type="checkbox" id="lcColorLock" onchange="lcSetLock(this.checked)"/>🔒 固定</label><button type="button" class="secondary" onclick="lcSetRandom()">ランダムに戻す</button></div><div id="lcColorGrid" class="lc-color-grid"></div><p class="lc-palette-footer">色見本は画面表示用の近似色です。特殊色はグラデーションで表示。抽選候補・出現率の設定は従来の機能をそのまま使用します。</p></section><div class="panel"><p class="hint">🎨 v2.5：主色126色・副色74候補に拡張（従来の色も継続使用）。「全項目」または「除外・出現率」から配色を設定できます。</p><div class="bar"><div><label>モード</label><select id="mode"><option value="random">完全ランダム</option><option value="theme">テーマ指定ランダム</option><option value="manual">手動設定</option></select></div><div><label>テーマ</label><select id="theme"><option>ランダム</option><option>黒・モード</option><option>花柄・ロマンティック</option><option>虹色・ポップ</option><option>高級・ラグジュアリー</option><option>ミニマル</option></select></div><div><label>構想の数</label><select id="batch"><option>1</option><option>3</option><option>5</option><option>10</option></select></div></div><p class="hint">🔒 固定すると再抽選でも変わりません。素材・レースの見本は識別用の模式図です。</p><div class="actions"><button onclick="roll('all')">全項目を再抽選</button><button class="secondary" onclick="roll('outfit')">ランジェリーだけ</button><button class="secondary" onclick="roll('person')">人物だけ</button><button class="secondary" onclick="roll('scene')">会場・カメラだけ</button><button class="secondary" onclick="resetAll()">初期化</button></div></div>
+<section class="panel" id="v25PosePanel"><h2 class="group-title">📸 紹介ポーズ・背面構図 <span class="pill">NEW v2.5</span></h2><p class="hint">モデルの姿勢を選択。接客動作・身体方向・カメラ方向は別項目です。背面を見せる構図は出力時に整合性を検証します。</p><div class="row"><label style="flex:2">紹介ポーズ<select id="v25PoseSelect" onchange="v25SetPose(this.value)"></select></label><label class="lock"><input type="checkbox" id="v25PoseLock" onchange="v25SetPoseLock(this.checked)">🔒 固定</label><button type="button" class="secondary" onclick="v25PoseRandom()">🎲 ポーズ再抽選</button></div><p class="small" id="v25PoseInfo"></p></section><div class="search"><div class="panel" style="margin:0;padding:10px"><div class="row"><input id="search" oninput="renderOther()" placeholder="候補を検索（例：レース、肩紐、刺繍）"/><span class="pill" id="count" style="flex:0 0 auto">0項目を固定</span></div></div></div>
+<div class="panel v17-hide" data-v17-collapsible="1" id="bra"><div class="v17-head"><button class="secondary" onclick="v17Toggle('bra')" type="button">閉じる ×</button></div><div class="controls"><div><h2 class="group-title">① ブラの基本タイプ</h2><div class="hint">画像をタップするとタイプを選択できます。</div></div><label class="lock"><input id="bralock" onchange="setLock(BRAKEY,this.checked)" type="checkbox"/>🔒 固定</label></div><div class="cards" id="bracards"></div><div class="figcaption">※ 図解は製品写真ではなくシルエットの目安。細部は下の詳細設定で調整できます。</div></div>
+<div class="panel v17-hide" data-v17-collapsible="1" id="pant"><div class="v17-head"><button class="secondary" onclick="v17Toggle('pant')" type="button">閉じる ×</button></div><div class="controls"><div><h2 class="group-title">② ショーツの基本タイプ</h2><div class="hint">ブラとは独立して選べます。</div></div><label class="lock"><input id="pantlock" onchange="setLock(PANTKEY,this.checked)" type="checkbox"/>🔒 固定</label></div><div class="cards" id="pantcards"></div></div>
+<div class="panel v17-hide" data-v17-collapsible="1" id="fabric"><div class="v17-head"><button class="secondary" onclick="v17Toggle('fabric')" type="button">閉じる ×</button></div><h2 class="group-title">③ 素材・レース・装飾を画像で選ぶ</h2>
+<p class="hint">写真ではなくデザイン識別用の図解。各カードを選ぶと詳細設定にも反映されます。「ランダム」も選べます。</p>
+<div id="swatchgallery"></div></div><div class="panel v17-hide" data-v17-collapsible="1" id="sceneShortcuts"><div class="v17-head"><button class="secondary" onclick="v17Toggle('sceneShortcuts')" type="button">閉じる ×</button></div><h2 class="group-title">④ 人物・ブース・撮影のクイック選択 <span class="pill">NEW v1.4</span></h2><p class="small">代表的な構図と仕事中の動作を、アイコン付きカードで選択。詳細設定・固定・候補プールにも連動します。</p><div id="sceneQuickCards"></div></div>
+<div class="panel v17-hide" data-v17-collapsible="1" id="details"><div class="v17-head"><button class="secondary" onclick="v17Toggle('details')" type="button">閉じる ×</button></div><h2 class="group-title">⑤ 細部・人物・ブランド・撮影</h2><p class="hint">ブラ16項目 ／ ショーツ14項目 ／ 全カテゴリ合計91項目。素材・装飾には選択値に応じた見本を表示。</p><div class="hint">素材・レースは見本カードからも選べます。詳細設定では選んだ項目に応じて画像が変わります。</div><div id="other"></div></div>
+<div class="panel v17-hide" data-v17-collapsible="1" id="pool-section"><div class="v17-head"><button class="secondary" onclick="v17Toggle('pool-section')" type="button">閉じる ×</button></div><h2 class="group-title">⑥ 抽選候補・除外・出現率 <span class="pill">NEW v1.3</span></h2>
+<p class="hint">抽選する項目を選び、候補ごとに「使用／除外」と出現率（1〜5倍）を指定できます。固定した項目はこの設定より優先されます。</p>
+<div class="pool-panel"><div class="pool-head"><div><label for="poolField">設定する項目</label><select id="poolField" onchange="renderPool()"></select></div><div><label for="poolFilter">候補を検索</label><input id="poolFilter" oninput="renderPool()" placeholder="候補名で絞り込み"/></div></div>
+<div class="pool-summary" id="poolInfo"></div><div class="pool-actions"><button class="secondary" onclick="poolAll(true)" type="button">すべて使用</button><button class="secondary" onclick="poolAll(false)" type="button">すべて除外</button><button class="secondary" onclick="poolEqual()" type="button">確率を均等に</button><button onclick="poolTry()" type="button">この項目だけ試し抽選</button></div>
+<div class="pool-grid" id="poolOptions"></div><p class="pool-message" id="poolMessage"></p>
+<p class="pool-note">出現率の倍率は相対的な重みです。例：Aが5倍、Bが1倍なら A は約83%、B は約17%。候補をすべて除外した場合、抽選は行わず警告します。</p></div></div>
+<div class="panel" id="comparePanel"><h2 class="group-title">⑦ 複数案の比較・お気に入り <span class="new-label">NEW v1.5</span></h2>
+<p class="small">「比較案を抽選」を押すと、固定条件と候補プールを守って独立に3〜10案を作成します。通常の構想生成とは別に、各案を選択・保存・再編集できます。</p>
+<div class="row" style="margin:10px 0"><label style="flex:1">比較数 <select id="compareCount"><option value="3">3案</option><option value="5">5案</option><option value="10">10案</option></select></label><button onclick="makeComparisons()">比較案を抽選</button><button class="secondary" onclick="clearComparisons()">比較をクリア</button></div>
+<div class="small" id="compareMessage" role="status"></div><div class="compare-grid" id="comparisonList"></div>
+<h3>お気に入り保存済み</h3><div class="row"><button class="secondary" onclick="exportFavorites()">お気に入りをJSON保存</button><label class="secondary import-btn">JSON読込<input accept=".json" onchange="importFavorites(event)" style="display:none" type="file"/></label></div><div class="compare-grid" id="favoritesList"></div>
+</div>
+<section class="panel" id="lcPeoplePanel"><h2 class="group-title">⑩ 人物別デザイン・顔の個別設定 <span class="pill">NEW v2.6</span></h2><p class="small">既存の全項目はそのままです。共通設定を基本に、2〜3人では顔と衣装を個別に生成します。各人物の項目は「共通設定を使用」または「個別指定」を選択。🔒 を付けた項目は人物別の再抽選でも固定します。</p><div class="row" style="margin:10px 0"><label>人物別の独立設定 <select id="lcPersonMode" onchange="lcTogglePersonMode(this.value)"><option value="on">有効（推奨）</option><option value="off">無効（全員共通）</option></select></label><button type="button" onclick="lcRerollPeople()">🎲 人物別に再抽選</button></div><p class="hint" id="lcPersonStatus"></p><p class="hint">v2.8：顔の方向性24種類・輪郭と印象を分離。魅力度は方向性ごとの魅力の強さとして表現。</p><div id="lcPersonTabs" class="lc-person-tabs"></div><div id="lcPersonEditor"></div></section><div class="panel"><h2 class="group-title">⑧ 構想・プロンプト出力</h2><label for="extra">追加指定</label><textarea id="extra" placeholder="例：カメラ目線、展示ブース、仕事中、被写体メイン、非性的な商業写真"></textarea><div class="actions" style="margin-top:10px"><button onclick="generate()">構想を生成</button><button class="secondary" onclick="copyOut()">結果をコピー</button><button class="secondary" onclick="saveJSON()">設定をJSON保存</button><button class="secondary" onclick="document.getElementById('file').click()">JSON読み込み</button><input accept=".json" id="file" onchange="loadJSON(event)" style="display:none" type="file"/></div><p id="notice"></p><div class="output" id="output">ここに抽選結果が表示されます。</div></div>
+<div class="panel" id="v18panel"><h2 class="group-title">⑨ v2.1 自動プロンプト整形</h2><p class="small">詳細構想は元データのまま保存。実用版・短縮版は出力専用に補正し、固定条件は変更しません。</p><div class="v18-tabs" id="v18tabs"><button type="button" data-mode="detail" onclick="v18SetMode('detail')">詳細構想</button><button type="button" data-mode="practical" onclick="v18SetMode('practical')">実用版</button><button type="button" data-mode="short" onclick="v18SetMode('short')">短縮版</button><button type="button" data-mode="issues" onclick="v18SetMode('issues')">矛盾チェック</button></div><span class="v18-meta" id="v18meta">「構想を生成」または比較案の「実用版を見る」を押してください。</span><div class="v18-report" id="v18result">抽選後、ここに結果が表示されます。</div><div class="v18-toolbar"><button type="button" onclick="v18Copy()">表示中をコピー</button><button type="button" class="secondary" onclick="v18ToggleBefore()">補正前後を比較</button><button type="button" class="secondary" onclick="v18SaveTxt()">テキスト保存</button></div><div id="v18before" class="v18-before" hidden></div><p id="v18status" class="v18-status" role="status"></p></div><div class="panel"><h2 class="group-title">プリセット・履歴</h2><div class="row"><input id="presetName" placeholder="プリセット名（例：黒・発表会）"/><button onclick="savePreset()">プリセット保存</button></div><div id="presets"></div><h3 style="font-size:14px;margin-top:18px">生成履歴</h3><div id="history"></div><button class="secondary" onclick="clearHistory()" style="margin-top:8px">履歴を消去</button></div>
+<div class="footer">オフラインで動作。画像はHTML内のSVG図解なのでインターネット接続不要。設定・プリセット・履歴はこのブラウザ内に保存されます。画像生成そのものは行わず、ChatGPTなどで使うプロンプトを出力します。</div>
+</main><script>
+const DATA={"name":"ランジェリー・カスタマイザー v2.8 候補マスター","version":"2.8","language":"ja","design_policy":{"抽選":"原則毎回独立・等確率","固定":"ユーザー固定条件を優先","整合性":"基本タイプから依存項目を抽選、固定値を保護し衝突は表示","透け感":"Lv.0〜5を独立抽選。画像出力時は非性的な商業展示として調整","出力":"文章確認→画像生成用プロンプト","人物":"成人日本人女性のみ・20〜39歳","素材":"透け感数値を廃止し、主素材・副素材・レースと部位別配置で表現","占有率":"30〜90%を10%刻みで抽選。複数人は合計占有率","顔の描写":"顔の方向性を先に決め、魅力度はその方向性における魅力の強さとして表現。輪郭・顔立ち・表情は自然な個人差として維持。"},"categories":{"ブラ・基本形状":{"基本タイプ":["フルカップ","3/4カップ","ハーフカップ","デミカップ","バルコネット","プランジ","トライアングル","ブラレット","バンドゥ","ストラップレス","ホルターネック","ロングライン","ビスチェ","コルセット風","スポーツブラ型","ソフトカップ","モールドカップ","フロントホック型"],"カップ被覆範囲":["広い","標準","やや浅い","浅い","左右で非対称"],"カップ上端":["水平","緩いカーブ","V字","ハート型","スカラップ","花びら状","左右非対称","直線と曲線の組み合わせ","波型","二段スカラップ","斜めライン","花弁重ね"],"カップ縫製":["一枚構造","二枚接ぎ","三枚接ぎ","縦切り替え","斜め切り替え","立体ダーツ","シームレス","ドレープ重ね","放射状切替","扇状パネル","プリーツ重ね","曲線切替"],"ワイヤー構造":["ワイヤーあり","ワイヤーなし","ソフトワイヤー","カップ一体型"],"パッド構成":["パッドなし","薄手パッド","取り外し可能","モールドパッド","左右異なる厚み"],"アンダーバンド":["細幅","標準","幅広","レース延長","フリル延長","二重バンド","ロングライン","V字バンド","波型バンド","装飾二重バンド"],"肩紐の数と形":["通常2本","極細2本","幅広2本","ダブルストラップ","片側ダブル","クロス","ホルター","ネックストラップ","肩紐なし","装飾ストラップ追加"],"肩紐の接続位置":["外寄り","標準","内寄り","背面クロス","首元","片側非対称"],"中央ブリッジ":["布製の細い接続","幅広接続","金属リング","装飾クリスタル","リボン接続","中央重ね合わせ","一体構造","ハート型接続","蝶型接続","装飾リング連結"],"留め具":["背面ホック","前面ホック","サイドホック","結び紐","プルオン","装飾バックル"],"左右対称性":["左右対称","刺繍のみ非対称","ストラップのみ非対称","カップ装飾が非対称","構造的に非対称"],"サイドパネル":["なし","細幅","幅広","レース切替","透け素材パネル","補強パネル"],"背面ストラップ":["平行","クロス","Y字","格子状","ホルター連動","背面ストラップなし"],"トップライン装飾":["装飾なし","細いパイピング","スカラップレース","チュール縁取り","プリーツ縁取り","リボンライン"],"カップの素材分割":["単一素材","上下二分割","左右二分割","中央パネル","外側レース・内側サテン","多面パッチワーク"]},"ショーツ・基本形状":{"基本タイプ":["スタンダードブリーフ","ビキニ","ヒップスター","ボーイショーツ","タップパンツ","フレンチカット","ハイレッグ","ブラジリアン","タンガ","Tバック","サイドストラップ型","ハイウエストブリーフ","ローライズブリーフ","ショート丈キュロット型"],"股上":["超ローライズ","ローライズ","ミドルライズ","ハイウエスト","超ハイウエスト"],"脚ぐり":["低め","標準","高め","非常に高め","直線気味","曲線を強調","左右非対称"],"前面の形":["一枚パネル","中央切り替え","左右切り替え","V字パネル","U字パネル","重ね布","プリーツパネル","三角パネル","扇状パネル","曲線切替","左右非対称パネル"],"前面被覆範囲":["広い","標準","やや細身","細身"],"サイド幅":["幅広","標準","細幅","極細","左右非対称"],"サイド構造":["一枚布","レースパネル","二重ストラップ","三重ストラップ","リング接続","結びリボン","メッシュパネル","切り替え布"],"ウエスト形状":["水平","緩いV字","深いV字","カーブ","スカラップ","幅広バンド","折返し","クロスウエスト","左右段差","二重V字","アーチ型"],"背面形状":["フルバック","セミバック","ブラジリアン","タンガ","Tバック","ボーイショーツ型"],"裾の処理":["共布縁取り","レース縁取り","スカラップ","パイピング","シームレス","フリル","メロウ仕上げ"],"背面装飾":["なし","小さなリボン","中央チャーム","中央刺繍","背面レース切替","左右に刺繍"],"フロント中央モチーフ":["なし","小さなリボン","小さなチャーム","縦刺繍","幾何学プレート","小型レースアップ"],"脚ぐり縁取り":["共布","スカラップレース","細いゴム縁","波型","フリル","パイピング"],"前面素材の配置":["単一","中央とサイドで分割","上段と下段で分割","斜め二分割","左右別素材","全面パッチワーク"],"飾りレース配置":["なし","フロント中央","左右サイド","ウエスト沿い","脚ぐり沿い","全体"]},"素材・生地表現":{"主素材":["サテン","シルク調","マイクロファイバー","コットン","モダール","ジャージー","ベルベット","ジャカード","シフォン","ストレッチニット","メッシュ","チュール","ストレッチサテン","シルクサテン","デュシェスサテン","光沢ジャージー","リブニット","光沢ジャカード"],"副素材":["なし","リバーレース","コードレース","ストレッチレース","チュール","オーガンジー","パワーネット","メッシュ","ベルベット","サテン","ジャカード","ラメチュール","フロッキーチュール","刺繍オーガンジー","メタリックメッシュ","プリーツチュール","立体刺繍レース"],"レース種類":["なし","リバーレース","コードレース","ケミカルレース","ストレッチレース","ラッセルレース","チュールレース","ギュピュールレース","シャンティイレース","エンブロイダリーレース","モチーフレース","フローラルレース","幾何学レース","ラメ糸レース","立体フラワーレース"],"表面質感":["マット","控えめな光沢","強い光沢","微細ラメ","起毛","細かな凹凸","プリーツ","シボ感","パール光沢","メタリック光沢","濡れたような艶","玉虫色","偏光光沢","シャンブレー調","エンボス加工","シワ加工","織り柄の光沢","グリッター加工"],"生地配置":["全面同素材","カップと土台で切替","左右で異素材","中央パネル切替","部分レース","レース全面","メッシュ部分使い","重ね生地"],"ブラの素材配置":["カップ全体に主素材","カップ表面に副素材を重ねる","カップ上端にレース","カップ左右で素材を切替","カップ下部にレース","アンダーバンドに副素材","カップ中央に主素材・周囲にレース","主素材と副素材のパネル切替"],"ショーツの素材配置":["前面全体に主素材","前面中央に主素材・側面に副素材","ウエスト周辺にレース","脚ぐり沿いにレース","前面上部に副素材","左右のサイドパネルに副素材","前面の一部に副素材を重ねる","全体に主素材・縁だけ副素材"]},"色・配色":{"主色":["ブラック","ホワイト","アイボリー","ベージュ","グレー","チャコール","シルバー","ゴールド","深紅","ワインレッド","ローズ","サーモンピンク","ピーチ","コーラル","オレンジ","アンバー","レモンイエロー","マスタード","ミント","エメラルド","オリーブ","ターコイズ","スカイブルー","ロイヤルブルー","ネイビー","ラベンダー","ライラック","バイオレット","プラム","ブラウン","虹色","オーロラ","ミルキーホワイト","パールホワイト","オフホワイト","クリーム","エクリュ","サンドベージュ","トープ","モカ","チョコレート","ココア","テラコッタ","コッパー","ブロンズ","シャンパンゴールド","プラチナ","スモーキーグレー","スレートブルー","ボルドー","バーガンディ","ルビーレッド","チェリーレッド","ガーネット","フューシャ","マゼンタ","ホットピンク","ベビーピンク","ダスティピンク","ローズゴールド","モーヴ","ダスティローズ","アプリコット","ペールピーチ","バーミリオン","ブリックレッド","タンジェリン","パンプキン","バターイエロー","ハニーイエロー","サフラン","ライム","ピスタチオ","セージグリーン","モスグリーン","フォレストグリーン","ボトルグリーン","ピーコックグリーン","ティール","アクア","アイスブルー","パウダーブルー","ベビーブルー","セルリアンブルー","コバルトブルー","サファイアブルー","ミッドナイトブルー","インディゴ","ペリウィンクル","藤色","スモーキーラベンダー","アメジスト","ロイヤルパープル","ディープパープル","グレープ","ダークプラム","シャンパンピンク","パールピンク","ミルキーミント","オパール","偏光ブルー","偏光ピンク","ディープターコイズ","トロピカルピンク","メタリックロイヤルパープル","エレクトリックバイオレット","ネオンマゼンタ","ラズベリーピンク","ドラゴンフルーツ","ルビーピンク","ピーコックブルー","ジュエルティール","カリビアンブルー","ディープエメラルド","アメジストピンク","オーキッドパープル","インペリアルパープル","ミッドナイトバイオレット","ローズレッド","カーマインレッド","シャンパンローズ","メタリックフューシャ","エレクトリックブルー","ラグーンブルー","ピーコックネイビー","ディープペトロール"],"副色":["なし","主色の濃淡","ブラック","ホワイト","シルバー","ゴールド","ピンク","レッド","ブルー","グリーン","パープル","虹色","アイボリー","ベージュ","チャコール","パールホワイト","クリーム","シャンパンゴールド","ローズゴールド","コッパー","ワインレッド","ボルドー","チェリーレッド","コーラル","ピーチ","ダスティピンク","ローズ","マゼンタ","オレンジ","アンバー","レモンイエロー","マスタード","セージグリーン","ミント","エメラルド","オリーブ","ティール","ターコイズ","アイスブルー","スカイブルー","ロイヤルブルー","ネイビー","ラベンダー","ライラック","バイオレット","アメジスト","プラム","ブラウン","モカ","オーロラ","ディープターコイズ","トロピカルピンク","メタリックロイヤルパープル","エレクトリックバイオレット","ネオンマゼンタ","ラズベリーピンク","ドラゴンフルーツ","ルビーピンク","ピーコックブルー","ジュエルティール","カリビアンブルー","ディープエメラルド","アメジストピンク","オーキッドパープル","インペリアルパープル","ミッドナイトバイオレット","ローズレッド","カーマインレッド","シャンパンローズ","メタリックフューシャ","エレクトリックブルー","ラグーンブルー","ピーコックネイビー","ディープペトロール"],"配色方式":["単色統一","濃淡配色","補色対比","2色ブロック","3色ブロック","多色パネル","グラデーション","左右非対称","虹色グラデーション","虹色モザイク","オーロラ偏光","メタリック差し色","縁取り強調配色","刺繍のみ対照色","上下逆転配色","中央から外側へのグラデーション","宝石色の多色配色","花柄プリント配色","アシンメトリーグラデーション"],"上下の配色関係":["完全一致","同系色で差をつける","主色だけ共通","対照色","独立した配色"],"金具色":["シルバー","ゴールド","ローズゴールド","ガンメタル","ブラック","金具なし"]},"装飾・モチーフ":{"装飾量":["なし","少ない","標準","多い","非常に多い"],"主モチーフ":["なし","薔薇","小花","蘭","桜","蔓植物","葉","蝶","羽根","星","月","太陽","雪の結晶","波","貝殻","幾何学","アールデコ","抽象線","クラウン","宝石","ハイビスカス","牡丹","ダリア","藤","椿","ユリ","アイリス","蓮","紫陽花","珊瑚","孔雀の羽根","流星","ステンドグラス","万華鏡","結晶"],"刺繍技法":["なし","平刺繍","立体刺繍","銀糸刺繍","金糸刺繍","同色刺繍","多色刺繍","ビーズ刺繍"],"装飾パーツ":["なし","リボン","小さなフリル","幅広フリル","パール","クリスタル","ラインストーン","ビーズ","リング","チェーン","ミニチャーム","花型パーツ","ハート型クリスタル","花型ビジュー","宝石風ブローチ","立体花弁","メタリックリーフ","刺繍ワッペン","パールチェーン","蝶型チャーム","装飾タッセル","繊細なメタルプレート"],"装飾配置":["カップ全面","カップ上端","中央のみ","アンダーバンド","肩紐","ショーツ前面","ショーツ両サイド","ウエスト","裾","左右非対称","複数箇所"]},"ブランド・デザイン思想":{"ブランド系統":["ラグジュアリー","フェミニン","モード","ポップ","ロマンティック","未来的","クラシカル","アート","スポーティー","ミニマル","レトロ","ギャル","姫ギャル","大人ギャル","モードギャル","Y2Kギャル"],"コレクション題材":["夜空","宝石","花園","虹","海","月光","都市","雪","森林","蝶","音楽","建築","夕焼け","幾何学","天体","水面","春","秋"],"時代感":["クラシカル","アールデコ","レトロ","現代","近未来","時代を限定しない"],"デザインの大胆さ":["控えめ","標準","独創的","非常に独創的"],"上下デザイン関係":["完全なセット","共通モチーフ","共通素材","共通配色","意図的なミックス"]},"人物・スタイリング":{"年齢":["20〜24歳","25〜29歳","30〜34歳","35〜39歳"],"顔立ち":["柔らかな印象","知的な印象","華やかな印象","ナチュラルな印象","爽やかな印象","落ち着いた印象","凛とした印象","親しみやすい印象","上品な印象","活発な印象"],"髪型":["ストレート","内巻き","外ハネ","ウェーブ","ポニーテール","シニヨン","ハーフアップ","編み込み","お団子","外ハネボブ","前下がりボブ","ストレートロング","ゆる巻きロング","低めポニーテール","高めポニーテール","ウルフカット","ショートウルフ","ハーフツイン","サイドポニー","韓国風くびれヘア","レイヤーボブ","編み下ろし","ワンレンボブ","ハンサムショート","マッシュショート","ショートレイヤー","切りっぱなしボブ","丸みショートボブ","くびれボブ","ミニボブ","ミディアムレイヤー","鎖骨ミディ","くびれミディ","ウルフミディ","スーパーロングストレート","韓国風ヨシンモリ","姫カット","ロングレイヤー","編み込みアップ","夜会巻き","サイドシニヨン","ハイポニー","ツインテール","玉ねぎヘア","ハーフアップお団子"],"髪色":["黒髪","ダークブラウン","ブラウン","アッシュブラウン","グレージュ","ベージュ","ブロンド","ワインレッド","ブルーブラック","ダークアッシュ","ミルクティーベージュ","ハニーブロンド","ピンクブラウン","ラベンダーブラウン","シルバーアッシュ","ナチュラルブラック","チョコブラウン","モカブラウン","キャラメルブラウン","チェリーブラウン","オリーブブラウン","ココアグレージュ","ラベンダーグレージュ","ローズブラウン","ピンクベージュ","アッシュピンク","アッシュグレー","プラチナブロンド","シャンパンブロンド","ホワイトシルバー","ブルーアッシュ","ネイビーブラック","カシスレッド","アプリコットオレンジ","ペールラベンダー"],"メイク":["ナチュラル","コーラル","ピンク","華やか","スモーキー","モード","上品なブラウン系","スモーキーアイ","ピンク系","モード系","華やかなパーティーメイク","ギャルメイク","姫ギャルメイク","大人ギャルメイク","モードギャルメイク","ツヤ肌メイク","ドーリーメイク"],"表情":["自然な微笑み","歯を見せた笑顔","上品な微笑み","凛とした表情","真剣な表情","リラックスした表情","穏やかな微笑み","自然な笑顔","真剣な接客表情","親しみやすい笑顔","はにかんだ笑顔","上品な笑顔","いたずらっぽい微笑み","柔らかなドヤ顔","爽やかな笑顔","目を細めた微笑み","控えめな照れ笑い","無邪気な笑顔","明るく弾ける笑顔","愛嬌のある微笑み"],"視線":["カメラ目線","手元を見る","展示品を見る","来場者を見る","斜め前を見る","商品を見る","やや横を見る","資料を見る"],"人数":["1人","2人","3人"],"アクセサリー":["なし","小粒のイヤリング","フープイヤリング","パールピアス","ドロップイヤリング","細いネックレス"],"身体の向き":["正面","右斜め15度","右斜め30度","左斜め15度","左斜め30度","横向き","完全背面","右斜め後ろ30度","左斜め後ろ30度","右斜め後ろ45度","左斜め後ろ45度","背面から肩越しに振り返る","半身振り返り"],"ヘアカラー技法":["単色","ナチュラルハイライト","細めハイライト","バレイヤージュ","グラデーションカラー","インナーカラー","イヤリングカラー","フェイスフレーミング","アンブレラカラー","裾カラー","ツートーン","ローライト"],"魅力度":["Lv.2｜自然で親しみやすい魅力","Lv.3｜整った顔立ちで印象に残る魅力","Lv.4｜方向性が際立つ非常に魅力的なモデル","Lv.5｜方向性の魅力を最大限に引き出した存在感"],"顔の方向性":["王道可愛い系","清楚可愛い系","アイドル可愛い系","童顔可愛い系","大人可愛い系","小悪魔可愛い系","ナチュラル可愛い系","ドーリー可愛い系","王道美人系","清楚美人系","華やか美人系","知的美人系","エレガント系","クールビューティー系","ナチュラル美人系","ミステリアス系","ヘルシー系","アクティブ系","ギャル系","姫ギャル系","大人ギャル系","モードギャル系","ナチュラルギャル系","韓国アイドル系"],"輪郭":["丸顔","卵型","面長","ベース型","逆三角形","ややシャープ","ふっくらした輪郭","すっきりした輪郭"]},"展示場所・業務":{"場所":["大規模国際展示会","ブランド専用ブース","百貨店催事","プレス発表会","ショールーム","期間限定ショップ","ファッションイベント","新作内覧会","国際展示会場","ブランド新作発表会","専門展示ブース","ポップアップショップ","業界向け商談会","ファッション見本市","デザイン展示室"],"ブース造形":["直線的","曲面パネル","アーチ型","円形展示","多層棚","ガラスケース","吊り下げ展示","大型LEDウォール","ミニマル","曲面アーチ","直線的なモダンブース","円形中央ステージ","ガラスケース中心","木目と真鍮","ミラーウォール","半透明アクリル","ファブリック壁面","LEDフレーム","ラウンジ風","黒大理石調","花のアーチ","宝石展示台","円柱ディスプレイ","光る階段状展示","植物を組み込んだ壁面"],"ブース配色":["白基調","黒基調","グレー基調","ベージュ基調","ブランド主色と統一","メタリック","白×シルバー","黒×ゴールド","アイボリー×ピンク","パステル","ダークグレー×紫","白×虹色","ネイビー×シルバー","テラコッタ×クリーム","エメラルド×金"],"展示物":["商品マネキン","生地見本","製品ラック","ガラスケース","タブレット端末","カタログ","モニター","ブランドロゴ","マネキン","商品のガラスケース","サンプルハンガー","大型モニター","ブランドパネル","デザインスケッチ","色見本パネル","パンフレットラック","発光ロゴ","照明付き展示台"],"仕事中の動作":["生地見本を紹介","展示品を指し示す","カタログを案内","新作を説明","タブレットで説明","来場者を迎える","展示台を整える","製品をハンガーから取る","記者撮影に対応","資料を手渡す","生地見本を説明","商品の特徴を案内","来場者を歓迎","新作カタログを手渡す","展示台の商品を整える","ブランド資料を指し示す","色見本を比較","新作モデルを紹介","商品タグを確認","スタッフと打ち合わせ","撮影用に立つ","プレス撮影に応じる","商品を持ち上げて紹介","展示品を入れ替える","来場者へお辞儀","衣装の刺繍を説明","ロゴパネル前で案内"],"仕事中の小物":["なし","生地見本","商品カタログ","タブレット","製品ハンガー","説明カード","小型の展示品","小型タブレット","色見本帳","生地サンプル","名刺ケース","ブランドパンフレット","クリップボード","小型マイク","商品タグ","ハンガー"],"背景の人":["なし","遠景に少人数","適度に来場者","ぼけた通行人","無人","遠くに少人数","ぼかした来場者","商談中のスタッフ","数人の来場者","賑わう展示会"],"照明演出":["均一な白色LED","暖色スポット","間接照明","展示品へのピンスポット","虹色LED","天井トラス照明"],"周辺の写り方":["ブース内部中心","隣接ブースが見える","展示ホールの通路が見える","ブランド壁面を背景","商品展示台を背景"],"会場の雰囲気":["静かな商談会","華やかな発表会","落ち着いた高級展示","賑わう見本市","近未来的な展示","華やかな新作お披露目","VIP内覧会","ブランド周年記念","海外高級展示会"]},"撮影・出力":{"画面比率":["縦9:16","縦2:3","縦3:4","正方形1:1","横4:3","横16:9"],"画角":["顔と上半身","腰上","太ももまで","膝上","全身","顔アップ","上半身","引きの全身"],"被写体占有率":["30%","40%","50%","60%","70%","80%","90%"],"カメラ方向":["正面","斜め前15度","斜め前30度","斜め前45度","真横","斜め後方30度","斜め後方","肩越し","真後ろ","斜め後方45度","背面を中心にした肩越し"],"カメラ高さ":["目線","胸の高さ","腰の高さ","やや俯瞰","ややローアングル"],"照明":["会場の白色照明","暖色スポット","柔らかい拡散光","ロゴの間接光","自然な混合照明","自然な展示会照明","白色LED","柔らかな暖色","スポットライト","間接照明","少しドラマチックな陰影"],"写真スタイル":["自然なスマホ写真","イベント記録写真","ファッション誌風","広告撮影風","ドキュメンタリー風","スマホ実写","自然なスナップ","ファッション広告","一眼レフ風","雑誌風","ライフスタイル広告","自然な広報記録","ラグジュアリー広告","ファッションルックブック"],"背景ぼけ":["自然","弱い","中程度","背景まで鮮明","弱いぼけ","強いぼけ"],"背景の情報量":["控えめ","適度","多め","ブースのロゴ中心"],"ピント位置":["人物の顔","人物と衣装","人物と展示品","全体を鮮明に"],"写真の質感":["自然な肌","微細な粒状感","軽いスマホノイズ","過度なレタッチなし"],"色調":["ニュートラル","暖色寄り","寒色寄り","鮮やか","低彩度","ジュエルトーン","パステルトーン","映画風","透明感重視","ハイコントラスト"],"構図の傾き":["水平","ごくわずかな傾き","意図的な斜め構図"],"紹介ポーズ":["正面ベーシック立ち","正面片手腰ポーズ","正面片足前ポーズ","斜め前モデル立ち","斜め前片手腰ポーズ","片脚重心の自然な立ち姿","横向きフェイスターン","背面ベーシック立ち","肩越し振り返り","斜め後ろ片手腰ポーズ","髪を片側に流す背面紹介","髪を持ち上げる背面紹介","ウォーキング立ち","歩きかけ振り返り","展示台横の自然なモデル立ち"]}},"constraints":[{"rule":"ストラップレス指定時は肩紐の数と形を肩紐なしに整合させる","type":"hard"},{"rule":"ブラ基本タイプがホルターネックなら肩紐構造を首元接続にする","type":"hard"},{"rule":"ショーツの背面形状が基本タイプと相容れないときは基本タイプを優先する","type":"hard"},{"rule":"被写体占有率が高いのに全身画角など物理的に不整合な場合は画角のみ調整し警告を残す","type":"soft"},{"rule":"正面構図ではショーツ背面やブラ背面の意匠が視認できないことを警告する","type":"soft"},{"rule":"衣装と手持ち展示物の見分けがつくように描写する","type":"soft"},{"rule":"裸体・性的行為・性的なポーズではなく成人の商業ファッション展示として画像化する","type":"output"}]};
+const CATS=DATA.categories;
+const BRAKEY='ブラ・基本形状 / 基本タイプ',PANTKEY='ショーツ・基本形状 / 基本タイプ';
+const BRA_DESC=['全体を包むカップ','カップの約3/4を覆う','浅めのカップ','小ぶりで浅いカップ','水平寄りのカップライン','中央が低いV字形','三角形のカップ','柔らかな一体感','横一直線の帯状','肩紐なし','首元で支える','アンダーが長め','胴部まで長い形','縦の切り替えが特徴','運動向け構造','柔らかなカップ','成型したカップ','前中央で留める'];
+const PANT_DESC=['基本的な覆い','標準的なビキニ型','腰で横に広い形','短いパンツ状','ゆったりした短パン状','脚ぐりが高め','脚ぐりを大きくカット','後面が小さめ','細身のカット','後ろがT字型','腰部分が高い','股上が浅め','両サイドが細い','前後で幅の違う形'];
+const stateKey='lingerieCustomizerV11Gallery';
+let state={values:{},locks:{},presets:[],history:[],extra:''};try{state={...state,...JSON.parse(localStorage.getItem(stateKey)||'{}')}}catch(e){}
+const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const K=(c,k)=>c+' / '+k;
+function save(){state.extra=document.getElementById('extra').value;try{localStorage.setItem(stateKey,JSON.stringify(state))}catch(e){} document.getElementById('count').textContent=Object.values(state.locks).filter(Boolean).length+'項目を固定'}
+function setLock(k,v){state.locks[k]=v;save()}
+function setValue(k,v){state.values[k]=v;save();if(k===BRAKEY||k===PANTKEY)renderCards();if(SWATCH_FIELDS.some(([c,f])=>K(c,f)===k))renderSwatches()}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function braSVG(i){let line='#3e344b',fabric='#887098',light='#b19ac3'; let band='<path d="M22 76 Q70 84 118 76 L118 86 Q70 95 22 86Z" fill="'+fabric+'" stroke="'+line+'" stroke-width="2"/>';
+let left='M23 65 Q21 39 45 36 Q65 34 68 64 L68 78 Q46 83 23 75Z',right='M72 64 Q76 34 95 36 Q120 39 117 65 L117 75 Q94 83 72 78Z';
+if([4,3,2].includes(i)){left='M23 64 L68 63 L68 77 Q44 82 23 73Z';right='M72 63 L117 64 L117 73 Q92 82 72 77Z'}
+if(i===5){left='M23 55 L63 75 L68 79 L23 76Z';right='M77 75 L117 55 L117 76 L72 79Z'}
+if(i===6||i===7){left='M25 73 L45 31 L68 76Z';right='M72 76 L94 31 L115 73Z'}
+if(i===8||i===9){left='M22 53 L70 53 L70 78 L22 78Z';right='M70 53 L118 53 L118 78 L70 78Z'}
+if(i===15){left='M22 51 Q45 35 70 56 L70 80 L22 80Z';right='M70 56 Q96 35 118 51 L118 80 L70 80Z'}
+let straps='<path d="M32 48 L35 13 M108 48 L105 13" stroke="'+line+'" stroke-width="4" fill="none" stroke-linecap="round"/>';
+if(i===9||i===8)straps='';if(i===10)straps='<path d="M35 42 Q52 19 70 13 Q89 19 105 42" fill="none" stroke="'+line+'" stroke-width="4"/>';
+if(i===14)straps='<path d="M22 50 L36 18 M118 50 L104 18" stroke="'+line+'" stroke-width="9"/>';
+let extension='';if([11,12,13].includes(i))extension='<path d="M24 80 L116 80 L109 '+(i===12?119:105)+' L31 '+(i===12?119:105)+' Z" fill="'+light+'" stroke="'+line+'" stroke-width="2"/><path d="M45 86 L49 102 M95 86 L91 102" stroke="'+line+'" opacity=".5"/>';
+if(i===17)extension+='<circle cx="70" cy="75" r="5" fill="#eee" stroke="'+line+'" stroke-width="2"/>';
+return `<svg viewBox="0 0 140 130" role="img" aria-label="ブラの形状の簡略図"><g>${extension}${straps}<path d="${left}" fill="${fabric}" stroke="${line}" stroke-width="2"/><path d="${right}" fill="${fabric}" stroke="${line}" stroke-width="2"/>${band}<path d="M70 61 L70 78" stroke="${line}" stroke-width="1.5"/></g></svg>`}
+function pantSVG(i){const line='#3e344b',fill='#887098'; let y=36,leg=90,side=24;
+if([10,11].includes(i))y=i===10?12:51;
+if(i===6||i===5)leg=70;
+if(i===3||i===4){return `<svg viewBox="0 0 140 130" role="img" aria-label="ショーツの形状の簡略図"><path d="M24 32 L116 32 L116 100 Q93 105 75 96 L70 80 L65 96 Q46 105 24 100Z" fill="${fill}" stroke="${line}" stroke-width="2"/><path d="M24 43 L116 43" stroke="${line}" stroke-width="2"/></svg>`}
+let sx=[12,13].includes(i)?42:24;
+let ex=140-sx;
+let shape=`M${sx} ${y} L${ex} ${y} L${ex} ${y+side} Q${ex-22} ${leg} 79 113 L61 113 Q${sx+22} ${leg} ${sx} ${y+side}Z`;
+if([8,9,12].includes(i))shape=`M${sx} ${y} L${ex} ${y} L${ex} ${y+6} Q88 98 76 114 L64 114 Q52 98 ${sx} ${y+6}Z`;
+if(i===7)shape=`M24 ${y} L116 ${y} L116 63 Q88 88 78 115 L62 115 Q52 88 24 63Z`;
+return `<svg viewBox="0 0 140 130" role="img" aria-label="ショーツの形状の簡略図"><path d="${shape}" fill="${fill}" stroke="${line}" stroke-width="2"/><path d="M${sx} ${y+9} L${ex} ${y+9}" stroke="${line}" stroke-width="1.8" fill="none"/><path d="M68 105 L68 112" stroke="${line}" opacity=".3"/></svg>`}
+function renderCards(){for(const [k,id,type,desc] of [[BRAKEY,'bracards','bra',BRA_DESC],[PANTKEY,'pantcards','pant',PANT_DESC]]){let arr=k===BRAKEY?CATS['ブラ・基本形状']['基本タイプ']:CATS['ショーツ・基本形状']['基本タイプ'];document.getElementById(id).innerHTML=arr.map((v,i)=>`<div class="typecard ${state.values[k]===v?'selected':''}" role="button" tabindex="0" aria-pressed="${state.values[k]===v}" data-value="${E(v)}" onclick="setValue('${k}',this.dataset.value)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"><span class="check">選択中</span><div class="art">${type==='bra'?braSVG(i):pantSVG(i)}</div><div class="name">${E(v)}</div><div class="sub">${E(desc[i]||'基本シルエット')}</div></div>`).join('')}
+ document.getElementById('bralock').checked=!!state.locks[BRAKEY];document.getElementById('pantlock').checked=!!state.locks[PANTKEY]}
+
+const DETAIL_DESCRIPTIONS={"カップ立体成形": "カップのふくらみをどう作るか", "カップ切替方向": "縫い目の方向と切替を独立指定", "カップ中央の距離": "左右カップの相対位置", "カップ下端": "下側のライン形状", "サイドパネル": "脇側の布面の構造", "背面バンド": "背中側の支えの幅や分割", "背面ストラップ": "背中側のストラップ配置", "トップライン装飾": "カップ上辺の縁取り", "カップの素材分割": "部位ごとの生地切替", "アンダーの輪郭": "アンダーバンドの下辺", "金具の位置": "装飾金具の配置", "サイドボーン": "脇側の補強やボーン風意匠", "フロントパネル切替": "前面の布地を分割する方向", "フロント中央モチーフ": "前面中央に置く飾り", "腰左右の高さ": "左右のウエストの段差", "脚ぐり縁取り": "脚ぐりの仕上げ方法", "サイド接続": "前面と背面をつなぐ部分", "ウエストバンド幅": "腰の帯部分の幅", "ウエストの飾り位置": "装飾を置く位置", "前面素材の配置": "複数素材の使い分け", "背面縫製": "後面の縫い合わせ方", "裾のシルエット": "下辺の形状", "ステッチ表現": "縫い目を見せるか", "飾りレース配置": "レースをどこに配置するか"};
+function detailSVG(category,field,index){
+ const isBra=category.startsWith('ブラ'), c='#58446d',l='#9a86b1',accent='#d4a8ad';
+ let kind=isBra?'bra':'pant';
+ const basic=(kind==='bra'?braSVG(4):pantSVG(1)).replace(/width="95%"/g,'width="95%"');
+ const n=index%6;
+ const patterns=[
+ `<path d="M32 30 L106 90" stroke="${accent}" stroke-width="5" stroke-dasharray="5 3" opacity=".95"/>`,
+ `<path d="M25 55 Q70 22 115 55" stroke="${accent}" stroke-width="5" fill="none"/>`,
+ `<path d="M22 85 L118 85" stroke="${accent}" stroke-width="6" stroke-dasharray="9 4"/>`,
+ `<circle cx="70" cy="70" r="9" fill="${accent}" stroke="${c}" stroke-width="2"/>`,
+ `<path d="M44 24 L93 106 M93 24 L44 106" stroke="${accent}" stroke-width="4" fill="none"/>`,
+ `<path d="M36 44 L45 55 L54 44 L63 55 L72 44 L81 55 L90 44" stroke="${accent}" stroke-width="4" fill="none"/>`
+ ];
+ return basic.replace('</svg>',patterns[n]+'</svg>');
+}
+
+const SWATCH_FIELDS=[['素材・生地表現','主素材'],['素材・生地表現','レース種類'],['素材・生地表現','表面質感'],['装飾・モチーフ','主モチーフ'],['装飾・モチーフ','刺繍技法'],['装飾・モチーフ','装飾パーツ']];
+function swatchSVG(value,kind='material'){
+ const v=String(value||'ランダム'); const id='p'+Array.from(v).reduce((s,ch)=>s+ch.charCodeAt(0),0)+kind.charCodeAt(0);
+ const lace=/レース|小花|薔薇|蘭|桜|蔓植物|葉|蝶|花型/.test(v), mesh=/メッシュ|ネット|チュール|シフォン|オーガンジー/.test(v);
+ const satin=/サテン|シルク|光沢|ツヤ/.test(v),stripe=/ジャカード|ストレッチ|ニット|ジャージー|コード|プリーツ|リブ/.test(v);
+ const metal=/銀糸|金糸|メタリック|チェーン|リング|バックル/.test(v),beads=/パール|クリスタル|ラインストーン|ビーズ|宝石|チャーム/.test(v);
+ const plain=/なし|無地|マット|ランダム/.test(v);
+ const base=metal?'#b2a5b3':satin?'#a17eaa':mesh?'#d7c4dc':'#bd9fbe';
+ const lines=mesh?'<path d="M0 0 L120 90 M-20 0 L100 90 M20 0 L140 90 M40 0 L160 90 M0 90 L120 0 M-20 90 L100 0 M20 90 L140 0 M40 90 L160 0" stroke="#7a628a" stroke-width=".8" opacity=".65"/>':stripe?Array.from({length:11},(_,i)=>`<path d="M${i*12} 0 L${i*12+12} 90" stroke="#745a84" opacity=".36" stroke-width="2"/>`).join(''):'';
+ const flowers=lace?Array.from({length:8},(_,i)=>{const x=12+(i%4)*30,y=20+Math.floor(i/4)*43;return `<g transform="translate(${x},${y})"><circle r="4" fill="#f8e7ef"/>${[0,90,180,270].map(a=>`<ellipse rx="4" ry="8" cy="-7" transform="rotate(${a})" fill="#ead4e8" stroke="#695178" stroke-width=".7"/>`).join('')}</g>`}).join(''):'';
+ const dots=beads?Array.from({length:12},(_,i)=>`<circle cx="${12+(i%6)*19}" cy="${18+Math.floor(i/6)*48}" r="${i%3===0?5:3}" fill="#f6f1f5" stroke="#8c6e99" stroke-width="1"/>`).join(''):'';
+ const symbolic=/星|月|太陽|雪|幾何学|波|貝殻|抽象|クラウン|アールデコ|羽根/.test(v)?'<path d="M18 52 l8 -20 8 20 20 8 -20 6 -8 17 -8 -17 -18 -6Z M70 25 L85 12 L100 25 L85 40Z M73 67 Q88 44 105 67" fill="none" stroke="#f8e7f4" stroke-width="3"/>':'';
+ const embroidered=/刺繍|平刺繍|立体/.test(v)?'<path d="M12 69 Q38 12 61 53 T109 36" fill="none" stroke="#f5dfea" stroke-width="4" stroke-dasharray="5 2"/>':'';
+ const ribbon=/リボン|フリル/.test(v)?'<path d="M60 47 Q20 9 17 43 Q18 67 60 47 Q100 9 103 43 Q100 67 60 47 M60 47 L54 80 M60 47 L71 80" stroke="#684a79" fill="#f0cce3" stroke-width="2"/>':'';
+ return `<svg viewBox="0 0 120 90" role="img" aria-label="${E(v)} の図案"><defs><linearGradient id="${id}" x2="1" y2=".65"><stop stop-color="${base}"/><stop offset=".48" stop-color="${satin?'#f4e9f6':'#c9b4d2'}"/><stop offset="1" stop-color="${base}"/></linearGradient></defs><rect width="120" height="90" rx="8" fill="url(#${id})"/><g>${plain?'':lines+flowers+dots+symbolic+embroidered+ribbon}</g>${satin?'<path d="M0 70 Q44 30 120 51" fill="none" stroke="white" stroke-width="12" opacity=".25"/>':''}<rect x="1" y="1" width="118" height="88" rx="7" fill="none" stroke="#6b5877" opacity=".35"/></svg>`;
+}
+function renderSwatches(){const host=document.getElementById('swatchgallery');if(!host)return;
+ host.innerHTML=SWATCH_FIELDS.map(([cat,field])=>{const k=K(cat,field),arr=CATS[cat][field],now=state.values[k]||'';
+ return `<details class="section swatch-section"><summary>${E(field)} <span class="small">(${arr.length}種類)</span></summary><div class="swatch-tools"><label class="lock"><input type="checkbox" ${state.locks[k]?'checked':''} data-k="${E(k)}" onchange="setLock(this.dataset.k,this.checked);renderSwatches()">🔒 固定</label><button class="secondary" onclick="setValue('${k}','');renderSwatches();renderOther()">ランダムに戻す</button></div><div class="swatch-grid">${arr.map(val=>`<button type="button" class="swatch-choice ${now===val?'active':''}" aria-pressed="${now===val}" data-k="${E(k)}" data-v="${E(val)}" onclick="setValue(this.dataset.k,this.dataset.v);renderSwatches();renderOther()"><span class="swatch-art">${swatchSVG(val)}</span><span class="swatch-name">${E(val)}</span></button>`).join('')}</div></details>`;
+ }).join('');
+}
+
+function renderDetailFields(cat,key,opts){let k=K(cat,key), value=state.values[k]||'';
+ let marked=!!state.locks[k];let hints=DETAIL_DESCRIPTIONS[key]||'';
+ let pict=/ブラ|ショーツ/.test(cat);let swatch=SWATCH_FIELDS.some(([c,f])=>K(c,f)===k);
+ return `<div class="field ${pict?'fieldvisual':''}"><div class="head"><label>${E(key)}</label><label class="lock"><input type="checkbox" ${marked?'checked':''} data-k="${E(k)}" onchange="setLock(this.dataset.k,this.checked)">🔒 固定</label></div><div class="fieldcontent">${pict?`<div class="detail-thumb" aria-hidden="true">${detailSVG(cat,key,Object.keys(CATS[cat]).indexOf(key))}</div>`:swatch?`<div class="detail-thumb swatch-preview" aria-hidden="true">${swatchSVG(value||'ランダム')}</div>`:''}<div class="fieldchoice"><select data-k="${E(k)}" onchange="setValue(this.dataset.k,this.value);renderSwatches();renderOther()"><option value="">ランダム</option>${opts.map(x=>`<option ${value===x?'selected':''} value="${E(x)}">${E(x)}</option>`).join('')}</select>${hints?`<div class="small" style="margin-top:5px">${E(hints)}</div>`:''}</div></div></div>`;
+}
+
+function renderOther(){let q=document.getElementById('search').value.trim().toLowerCase(),out='';for(let [cat,fields] of Object.entries(CATS)){let rows='';for(let [key,opts] of Object.entries(fields)){let k=K(cat,key);if(k===BRAKEY||k===PANTKEY)continue;if(q&&!(`${cat} ${key} ${opts.join(' ')}`.toLowerCase().includes(q)))continue;rows+=renderDetailFields(cat,key,opts)}
+ if(rows)out+=`<details class="section" ${q?'open':''}><summary>${E(cat)} <span class="small">(${Object.keys(fields).length}項目)</span></summary><div class="inner fieldgrid">${rows}</div></details>`}
+ document.getElementById('other').innerHTML=out;save()}
+function themeOverrides(){let t=document.getElementById('theme').value, o={};if(t==='黒・モード'){o['色・配色 / 主色']='ブラック';o['ブランド・デザイン思想 / ブランド系統']='モード'}if(t==='虹色・ポップ'){o['色・配色 / 主色']='虹色';o['ブランド・デザイン思想 / ブランド系統']='ポップ'}if(t==='花柄・ロマンティック'){o['ブランド・デザイン思想 / ブランド系統']='ロマンティック';o['装飾・モチーフ / 主モチーフ']='薔薇'}if(t==='高級・ラグジュアリー')o['ブランド・デザイン思想 / ブランド系統']='ラグジュアリー';if(t==='ミニマル')o['ブランド・デザイン思想 / 全体シルエット']='ミニマル';return o}
+function selectedPart(cat,part){if(part==='all')return true;if(part==='outfit')return /ブラ|ショーツ|素材|色|装飾|ブランド/.test(cat);if(part==='person')return /人物/.test(cat);if(part==='scene')return /展示|撮影/.test(cat);return false}
+function roll(part,rerender=true){let overrides=document.getElementById('mode').value==='theme'?themeOverrides():{};for(let [cat,fields] of Object.entries(CATS)){if(!selectedPart(cat,part))continue;for(let [field,opts] of Object.entries(fields)){let k=K(cat,field);if(state.locks[k])continue;state.values[k]=overrides[k]&&opts.includes(overrides[k])?overrides[k]:pick(opts)}}if(rerender){renderCards();renderOther();renderSwatches()}save()}
+function snapshot(){let v={...state.values},overrides=document.getElementById('mode').value==='theme'?themeOverrides():{};for(let [cat,fields] of Object.entries(CATS))for(let [field,opts] of Object.entries(fields)){let k=K(cat,field);if(!v[k])v[k]=!state.locks[k]&&overrides[k]&&opts.includes(overrides[k])?overrides[k]:pick(opts)}return v}
+function build(v,i,extraText=state.extra){let parts=[`【No.${String(i+1).padStart(3,'0')}｜ランジェリー展示構想】`];for(let [cat,fields] of Object.entries(CATS)){parts.push('\n■ '+cat);for(let field of Object.keys(fields))parts.push(`${field}：${v[K(cat,field)]||'未指定'}`)}parts.push('\n追加指定：'+(extraText||'なし'));parts.push('画像生成指示：架空の20〜39歳の成人日本人女性による新作ランジェリーの非性的な商業ファッション展示。実写写真、1枚、コラージュなし。衣装の形状・素材・刺繍を重視。画像生成サービスの安全基準を優先する。');return parts.join('\n')}
+function generate(){let count=Number(document.getElementById('batch').value),results=[],last=null,mode=document.getElementById('mode').value;
+for(let i=0;i<count;i++){let v=snapshot();results.push(build(v,i));last=v;
+if(i<count-1&&mode!=='manual'){
+  const nxt={...v};for(let [cat,fields] of Object.entries(CATS))for(let [field,opts] of Object.entries(fields)){let k=K(cat,field);if(!state.locks[k])delete nxt[k];}state.values=nxt;
+}}
+if(last)state.values={...last};let output=results.join('\n\n━━━━━━━━━━━━━━━━\n\n');document.getElementById('output').textContent=output;
+state.history.unshift({time:new Date().toLocaleString('ja-JP'),text:output,values:{...state.values}});state.history=state.history.slice(0,30);
+document.getElementById('notice').textContent='※ 図解は素材・構造の特徴を示す模式図で、実物写真・製品仕様の厳密な再現ではありません。';renderCards();renderOther();renderSwatches();renderHistory();save()}
+async function copyOut(){let value=document.getElementById('output').textContent;try{await navigator.clipboard.writeText(value);alert('コピーしました')}catch(e){let t=document.createElement('textarea');t.value=value;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();alert('コピーしました')}}
+function download(obj,name){let a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),500)}function saveJSON(){download({version:'1.2-gallery',...state},'ランジェリーカスタマイザー_設定.json')}
+function loadJSON(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.values||!x.locks)throw Error('設定データの形式が違います');state={...state,...x};document.getElementById('extra').value=state.extra||'';renderCards();renderOther();renderSwatches();renderPresets();renderHistory()}catch(e){alert('読み込みに失敗しました: '+e.message)}};r.readAsText(f);e.target.value=''}
+function resetAll(){if(!confirm('固定を含む全設定を初期化しますか？'))return;state.values={};state.locks={};state.extra='';document.getElementById('extra').value='';renderCards();renderOther();renderSwatches();save()}
+function savePreset(){let name=document.getElementById('presetName').value.trim();if(!name)return alert('名前を入力してください');state.presets.push({name,values:{...state.values},locks:{...state.locks},extra:state.extra});document.getElementById('presetName').value='';save();renderPresets()}
+function renderPresets(){document.getElementById('presets').innerHTML=state.presets.map((p,i)=>`<div class="preset"><span>${E(p.name)}</span><div class="row"><button class="secondary" onclick="restorePreset(${i})">呼び出す</button><button class="secondary" onclick="deletePreset(${i})">削除</button></div></div>`).join('')||'<p class="small">プリセットはありません。</p>'}
+function restorePreset(i){let p=state.presets[i];state.values={...p.values};state.locks={...p.locks};state.extra=p.extra||'';document.getElementById('extra').value=state.extra;renderCards();renderOther();renderSwatches();save()}
+function deletePreset(i){state.presets.splice(i,1);save();renderPresets()}
+function renderHistory(){document.getElementById('history').innerHTML=state.history.map((h,i)=>`<div class="preset"><span>${E(h.time)}</span><div class="row"><button class="secondary" onclick="document.getElementById('output').textContent=state.history[${i}].text">結果を見る</button><button class="secondary" onclick="restoreHistory(${i})">復元</button></div></div>`).join('')||'<p class="small">生成履歴はありません。</p>'}
+function restoreHistory(i){state.values={...state.history[i].values};renderCards();renderOther();renderSwatches();save()}
+function clearHistory(){if(!confirm('履歴を消去しますか？'))return;state.history=[];renderHistory();save()}
+
+// v1.3: candidate pools (allow/block and relative weight) — backward-compatible with v1.2 settings.
+state.poolRules=state.poolRules && typeof state.poolRules==='object'?state.poolRules:{};
+const ALL_FIELDS=Object.entries(CATS).flatMap(([c,fs])=>Object.entries(fs).map(([f,opts])=>({k:K(c,f),cat:c,field:f,opts})));
+const FIELD_MAP=Object.fromEntries(ALL_FIELDS.map(x=>[x.k,x]));
+const weightLevels=[1,2,3,4,5];
+function ruleFor(k){if(!state.poolRules[k]||typeof state.poolRules[k]!=='object')state.poolRules[k]={};return state.poolRules[k]}
+function eligibleFor(k){const meta=FIELD_MAP[k];if(!meta)return [];
+ const r=state.poolRules[k]||{};
+ return meta.opts.map(v=>({v,w:Number(r[v]?.weight??1),enabled:r[v]?.enabled!==false})).filter(x=>x.enabled&&Number.isFinite(x.w)&&x.w>0);
+}
+function weightedPick(k){const pool=eligibleFor(k);if(!pool.length)return null;
+ const total=pool.reduce((a,b)=>a+b.w,0);let r=Math.random()*total;
+ for(const x of pool){r-=x.w;if(r<0)return x.v;}return pool[pool.length-1].v;
+}
+function setPoolValue(k,v,field,value){const r=ruleFor(k);r[v]={...(r[v]||{}),[field]:value};save();renderPool()}
+function initPool(){const select=document.getElementById('poolField');select.innerHTML=ALL_FIELDS.map(x=>`<option value="${E(x.k)}">${E(x.cat)} ＞ ${E(x.field)}</option>`).join('');
+ select.value=BRAKEY;renderPool();}
+function renderPool(){const k=document.getElementById('poolField').value,meta=FIELD_MAP[k];if(!meta)return;
+ const q=document.getElementById('poolFilter').value.trim().toLowerCase(), r=ruleFor(k);
+ const allowed=eligibleFor(k), isLocked=!!state.locks[k], isManual=!!state.values[k];
+ const lockedValue=state.values[k]||'';
+ document.getElementById('poolInfo').textContent=`${allowed.length} / ${meta.opts.length}候補が有効 ・ ${isLocked?'🔒 固定：'+(lockedValue||'未指定'):'固定なし'}${!isLocked&&isManual?' ・ 現在値：'+lockedValue:''}`;
+ document.getElementById('poolOptions').innerHTML=meta.opts.map((v,i)=>{if(q&&!v.toLowerCase().includes(q))return '';
+  const enabled=r[v]?.enabled!==false,w=r[v]?.weight||1;
+  let art='';if(k===BRAKEY)art=braSVG(i);else if(k===PANTKEY)art=pantSVG(i);
+  else if(SWATCH_FIELDS.some(([c,f])=>K(c,f)===k))art=swatchSVG(v);
+  return `<div class="pool-option ${enabled?'':'off'}"><input type="checkbox" aria-label="${E(v)} を抽選対象に含める" data-k="${E(k)}" data-v="${E(v)}" ${enabled?'checked':''} onchange="setPoolValue(this.dataset.k,this.dataset.v,'enabled',this.checked)">${art?`<div class="mini-art">${art}</div>`:''}<span class="pool-label">${E(v)}</span><select aria-label="${E(v)} の相対出現率" data-k="${E(k)}" data-v="${E(v)}" onchange="setPoolValue(this.dataset.k,this.dataset.v,'weight',Number(this.value))">${weightLevels.map(n=>`<option value="${n}" ${Number(w)===n?'selected':''}>${n}倍</option>`).join('')}</select></div>`
+ }).join('');
+ document.getElementById('poolMessage').textContent=allowed.length?'':`⚠ この項目は候補がすべて除外されています。固定値がない抽選では結果を生成できません。`;
+}
+function poolAll(on){const k=document.getElementById('poolField').value,m=FIELD_MAP[k];if(!m)return;for(const v of m.opts)ruleFor(k)[v]={...(ruleFor(k)[v]||{}),enabled:on};save();renderPool()}
+function poolEqual(){const k=document.getElementById('poolField').value,m=FIELD_MAP[k];if(!m)return;for(const v of m.opts)ruleFor(k)[v]={...(ruleFor(k)[v]||{}),weight:1};save();renderPool()}
+function poolTry(){const k=document.getElementById('poolField').value,v=weightedPick(k);document.getElementById('poolMessage').textContent=v===null?'⚠ 有効な候補がありません。':'試し抽選 → '+v+' （設定値・固定状態は変更しません）'}
+// Fixed entries win. Theme preferences are considered only when they remain eligible.
+function valueFor(k,overrides){const pool=eligibleFor(k);if(!pool.length)throw Error('抽選候補がありません：'+k);
+ if(overrides[k]&&pool.some(x=>x.v===overrides[k]))return overrides[k];
+ return weightedPick(k);
+}
+function roll(part,rerender=true){let overrides=document.getElementById('mode').value==='theme'?themeOverrides():{};
+ try{let changes={};for(let [cat,fields] of Object.entries(CATS)){if(!selectedPart(cat,part))continue;for(let field of Object.keys(fields)){let k=K(cat,field);if(state.locks[k])continue;changes[k]=valueFor(k,overrides)}}
+ Object.assign(state.values,changes);if(rerender){renderCards();renderOther();renderSwatches()}save();renderPool();document.getElementById('notice').textContent='再抽選しました。';}
+ catch(e){document.getElementById('notice').textContent='⚠ '+e.message;alert(e.message)}
+}
+function snapshot(base=state.values){let v={...base},overrides=document.getElementById('mode').value==='theme'?themeOverrides():{};
+ for(let [cat,fields] of Object.entries(CATS))for(let field of Object.keys(fields)){let k=K(cat,field);if(!v[k])v[k]=valueFor(k,overrides)}return v;
+}
+function generate(){const count=Number(document.getElementById('batch').value),results=[],mode=document.getElementById('mode').value;
+ try{let previous={...state.values},last=null;
+ for(let i=0;i<count;i++){
+  const base=i===0||mode==='manual'?previous:Object.fromEntries(Object.entries(previous).filter(([k])=>state.locks[k]));
+  const v=snapshot(base);results.push(build(v,i));last=v;
+ }
+ if(last)state.values={...last};const output=results.join('\n\n━━━━━━━━━━━━━━━━\n\n');document.getElementById('output').textContent=output;
+ state.history.unshift({time:new Date().toLocaleString('ja-J'),text:output,values:{...last}});state.history=state.history.slice(0,30);
+ document.getElementById('notice').textContent='候補プール・相対出現率を反映しました。固定項目は優先されます。';renderCards();renderOther();renderSwatches();renderHistory();renderPool();save();
+ }catch(e){document.getElementById('notice').textContent='⚠ '+e.message;alert(e.message)}
+}
+// JSON, presets, and reset include pool rules. Version 1.2 files remain loadable.
+function saveJSON(){download({version:'2.8',...state},'ランジェリーカスタマイザー_v2.8_設定.json')}
+function resetAll(){if(!confirm('固定と抽選候補設定を含む全設定を初期化しますか？'))return;state.values={};state.locks={};state.poolRules={};state.extra='';document.getElementById('extra').value='';renderCards();renderOther();renderSwatches();renderPool();save()}
+function savePreset(){let name=document.getElementById('presetName').value.trim();if(!name)return alert('名前を入力してください');state.presets.push({name,values:{...state.values},locks:{...state.locks},poolRules:JSON.parse(JSON.stringify(state.poolRules)),extra:state.extra});document.getElementById('presetName').value='';save();renderPresets()}
+function restorePreset(i){let p=state.presets[i];state.values={...p.values};state.locks={...p.locks};state.poolRules=JSON.parse(JSON.stringify(p.poolRules||{}));state.extra=p.extra||'';document.getElementById('extra').value=state.extra;renderCards();renderOther();renderSwatches();renderPool();save()}
+function loadJSON(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.values||!x.locks)throw Error('設定データの形式が違います');state={...state,...x,poolRules:x.poolRules||{}};document.getElementById('extra').value=state.extra||'';renderCards();renderOther();renderSwatches();renderPresets();renderHistory();renderPool();if(typeof window.v28Migrate==='function')window.v28Migrate();renderOther();if(typeof v17Sync==='function')v17Sync();save()}catch(err){alert('読み込みに失敗しました: '+err.message)}};r.readAsText(f);e.target.value=''}
+
+
+const QUICK_GROUPS=[
+ {cat:'人物・スタイリング',field:'人数',label:'人物の人数',choices:[['👩','1人'],['👥','2人'],['👩‍👩‍👧','3人']]},
+ {cat:'人物・スタイリング',field:'視線',label:'視線',choices:[['📷','カメラ目線'],['👀','来場者を見る'],['🧵','商品を見る'],['📋','資料を見る']]},
+ {cat:'展示場所・業務',field:'場所',label:'会場タイプ',choices:[['🏢','国際展示会場'],['✨','ブランド新作発表会'],['🏬','百貨店催事'],['🛍️','ポップアップショップ'],['🖼️','ショールーム']]},
+ {cat:'展示場所・業務',field:'仕事中の動作',label:'仕事中の動作',choices:[['🧵','生地見本を説明'],['📖','新作カタログを手渡す'],['🫱','来場者を歓迎'],['🪄','展示台の商品を整える'],['📸','プレス撮影に応じる'],['🎨','色見本を比較']]},
+ {cat:'撮影・出力',field:'画角',label:'画角',choices:[['👤','上半身'],['📐','腰上'],['🧍','膝上'],['🚶','全身']]},
+ {cat:'撮影・出力',field:'カメラ方向',label:'カメラ方向',choices:[['⬆️','正面'],['↗️','斜め前30度'],['➡️','真横'],['↪️','肩越し']]},
+ {cat:'撮影・出力',field:'被写体占有率',label:'被写体占有率',choices:[['▫️','30%'],['▫️','40%'],['▫️','50%'],['◻️','60%'],['◻️','70%'],['🔲','80%'],['🔳','90%']]}
+];
+function renderQuick(){const root=document.getElementById('sceneQuickCards');if(!root)return;
+root.innerHTML=QUICK_GROUPS.map(g=>{const k=K(g.cat,g.field),v=state.values[k];return `<div class="quick-group"><div class="quick-header"><h3>${E(g.label)}</h3><label class="lock"><input type="checkbox" data-k="${E(k)}" ${state.locks[k]?'checked':''} onchange="setLock(this.dataset.k,this.checked)">🔒固定</label></div><div class="quick-grid">${g.choices.map(([icon,val])=>`<button class="quick-card ${v===val?'active':''}" type="button" data-k="${E(k)}" data-v="${E(val)}" onclick="setValue(this.dataset.k,this.dataset.v);renderOther();renderQuick()"><span class="quick-icon" aria-hidden="true">${icon}</span><span>${E(val)}</span></button>`).join('')}<button class="quick-card ${!v?'active':''}" type="button" data-k="${E(k)}" onclick="setValue(this.dataset.k,'');renderOther();renderQuick()"><span class="quick-icon" aria-hidden="true">🎲</span><span>ランダム</span></button></div></div>`}).join('');}
+// Keep shortcut buttons synchronized with legacy selection, presets and random operations.
+const _setValueV14=setValue;
+setValue=function(k,v){_setValueV14(k,v);renderQuick();};
+const _renderOtherV14=renderOther;
+renderOther=function(){_renderOtherV14();renderQuick();};
+
+
+// v1.5 compare/favorites layer. Stored independently of the older settings to avoid migration loss.
+const COMPARE_STORAGE='lingerieCustomizerV15Compare';
+let compareState={cases:[],favorites:[],selected:null};
+try {const x=JSON.parse(localStorage.getItem(COMPARE_STORAGE)||'{}');if(x&&typeof x==='object'){compareState={...compareState,...x};}}catch(e){}
+function saveCompare(){try{localStorage.setItem(COMPARE_STORAGE,JSON.stringify(compareState))}catch(e){document.getElementById('compareMessage').textContent='保存容量が不足しています。JSONを書き出してください。'}}
+const compareKeys=[['ブラ','ブラ・基本形状','基本タイプ'],['ショーツ','ショーツ・基本形状','基本タイプ'],['主色','色・配色','主色'],['素材','素材・生地表現','主素材'],['場所','展示場所・業務','場所'],['動作','展示場所・業務','仕事中の動作'],['画角','撮影・出力','画角']];
+function summarizeCase(v){let lines=[];for(const [label,cat,field] of compareKeys){let k=K(cat,field);if(v[k])lines.push(`<div><b>${E(label)}</b>：${E(v[k])}</div>`)}return lines.join('')||'<div>詳細設定から確認できます。</div>'}
+function compareCaseCard(entry,index,kind){const favorite=kind==='favorite';const uid=String(entry.id);const selected=compareState.selected===uid;
+return `<article class="compare-card ${selected?'selected':''}"><h4>${favorite?'★ お気に入り':'候補 '+String(index+1).padStart(2,'0')} <span class="num">${E(entry.name||'')}</span></h4><div class="summary">${summarizeCase(entry.values)}</div><div class="actions">
+<button onclick="viewCase('${kind}',${index})">全文を見る</button><button class="secondary" onclick="restoreCase('${kind}',${index})">設定に反映</button><button class="secondary" onclick="copyCase('${kind}',${index})">コピー</button>
+${favorite?`<button class="secondary" onclick="removeFavorite(${index})">削除</button>`:`<button class="secondary" onclick="favoriteCase(${index})">☆ 保存</button><button class="secondary" onclick="rerollCase(${index})">この案だけ再抽選</button>`}
+</div></article>`}
+function renderComparisons(){document.getElementById('comparisonList').innerHTML=compareState.cases.map((x,i)=>compareCaseCard(x,i,'case')).join('')||'<p class="small">比較案はまだありません。</p>';
+document.getElementById('favoritesList').innerHTML=compareState.favorites.map((x,i)=>compareCaseCard(x,i,'favorite')).join('')||'<p class="small">保存した案はありません。</p>';}
+function getCase(kind,i){return (kind==='favorite'?compareState.favorites:compareState.cases)[i]}
+function uniqueCase(values, prefix){return {id:String(Date.now())+'-'+Math.random().toString(36).slice(2),name:prefix,values:{...values},extra:document.getElementById('extra').value,createdAt:new Date().toLocaleString('ja-JP')}}
+function randomComparisonValues(baseValues=state.values){let overrides=document.getElementById('mode').value==='theme'?themeOverrides():{};let result={};for(let [cat,fields] of Object.entries(CATS))for(let field of Object.keys(fields)){let k=K(cat,field);if(state.locks[k]&&baseValues[k]){result[k]=baseValues[k];continue}result[k]=valueFor(k,overrides)}return result}
+function makeComparisons(){try{const n=Number(document.getElementById('compareCount').value);let items=[];for(let i=0;i<n;i++)items.push(uniqueCase(randomComparisonValues(),'No.'+String(i+1).padStart(3,'0')));compareState.cases=items;compareState.selected=null;saveCompare();renderComparisons();document.getElementById('compareMessage').textContent=n+'案を生成しました。固定条件と候補プールの設定を適用しています。';}catch(e){document.getElementById('compareMessage').textContent='⚠ '+e.message}}
+function clearComparisons(){if(!compareState.cases.length)return;if(!confirm('比較中の案をクリアしますか？お気に入りは残ります。'))return;compareState.cases=[];compareState.selected=null;saveCompare();renderComparisons()}
+function viewCase(kind,i){const x=getCase(kind,i);if(!x)return;compareState.selected=x.id;saveCompare();renderComparisons();const output=build(x.values,i,x.extra);document.getElementById('output').textContent=output;document.getElementById('output').scrollIntoView({behavior:'smooth',block:'start'});}
+function restoreCase(kind,i){const x=getCase(kind,i);if(!x)return;state.values={...x.values};state.extra=x.extra||'';document.getElementById('extra').value=state.extra;renderCards();renderOther();renderSwatches();renderPool();save();compareState.selected=x.id;saveCompare();renderComparisons();document.getElementById('compareMessage').textContent='設定に反映しました。細部設定から編集・再抽選できます（既存の固定設定は維持）。';document.getElementById('output').textContent=build(x.values,i,x.extra);}
+async function copyCase(kind,i){const x=getCase(kind,i);if(!x)return;const value=build(x.values,i,x.extra);try{await navigator.clipboard.writeText(value);document.getElementById('compareMessage').textContent='案をコピーしました。'}catch(e){const ta=document.createElement('textarea');ta.value=value;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();document.getElementById('compareMessage').textContent='案をコピーしました。'}}
+function favoriteCase(i){const x=compareState.cases[i];if(!x)return;const name=prompt('お気に入り名',x.name||'お気に入り');if(name===null)return;compareState.favorites.unshift({...x,id:String(Date.now())+'-fav-'+Math.random().toString(36).slice(2),name:(name.trim()||'お気に入り').slice(0,80)});saveCompare();renderComparisons()}
+function removeFavorite(i){if(!confirm('このお気に入りを削除しますか？'))return;compareState.favorites.splice(i,1);saveCompare();renderComparisons()}
+function rerollCase(i){try{const old=compareState.cases[i];if(!old)return;compareState.cases[i]=uniqueCase(randomComparisonValues(old.values),old.name);saveCompare();renderComparisons();document.getElementById('compareMessage').textContent='候補'+(i+1)+'だけ再抽選しました。'}catch(e){document.getElementById('compareMessage').textContent='⚠ '+e.message}}
+function exportFavorites(){download({version:'1.5',type:'lingerie-favorites',favorites:compareState.favorites},'ランジェリー_v1.6_お気に入り.json')}
+function importFavorites(event){const file=event.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!Array.isArray(x.favorites))throw Error('お気に入り形式ではありません');let valid=x.favorites.filter(p=>p&&p.values&&typeof p.values==='object'&&!Array.isArray(p.values)).slice(0,200);compareState.favorites=[...valid.map(p=>({...p,id:String(Date.now())+'-import-'+Math.random().toString(36).slice(2)})),...compareState.favorites];saveCompare();renderComparisons();document.getElementById('compareMessage').textContent=valid.length+'件を読み込みました。'}catch(e){document.getElementById('compareMessage').textContent='読込失敗：'+e.message}};r.readAsText(file);event.target.value=''}
+renderComparisons();
+
+initPool();
+document.getElementById('extra').value=state.extra||'カメラ目線、展示ブースで仕事中、被写体メイン、非性的、縦9:16';renderCards();renderOther();renderSwatches();renderPresets();renderHistory();
+</script>
+<script>
+// v1.7 presentation layer: never changes underlying candidate data or random engine.
+const V17_FIELDS=[
+ ['ブラのタイプ','ブラ・基本形状','基本タイプ'],
+ ['ショーツのタイプ','ショーツ・基本形状','基本タイプ'],
+ ['メインカラー','色・配色','主色'],
+ ['主素材','素材・生地表現','主素材'],
+ ['展示場所','展示場所・業務','場所'],
+ ['仕事中の動作','展示場所・業務','仕事中の動作'],
+ ['視線','人物・スタイリング','視線'],
+ ['撮影画角','撮影・出力','画角'],
+ ['被写体占有率','撮影・出力','被写体占有率']
+];
+function v17Init(){
+ const box=document.getElementById('v17fields');
+ box.innerHTML=V17_FIELDS.map(([label,cat,field],i)=>{
+  const k=K(cat,field);const options=CATS[cat]?.[field]||[];
+  return `<div class="v17-field"><label for="v17select${i}">${E(label)}</label><div class="v17-inputrow"><select id="v17select${i}" onchange="v17Change(${i},this.value)"><option value="">🎲 ランダム</option>${options.map(o=>`<option value="${E(o)}">${E(o)}</option>`).join('')}</select><label class="v17-pin"><input type="checkbox" id="v17lock${i}" onchange="v17Lock(${i},this.checked)">固定</label></div></div>`;
+ }).join('');v17Sync();
+}
+function v17Sync(){
+ for(let i=0;i<V17_FIELDS.length;i++){
+  const [,cat,field]=V17_FIELDS[i],key=K(cat,field),sel=document.getElementById('v17select'+i),pin=document.getElementById('v17lock'+i);
+  if(!sel||!pin)continue;
+  sel.value=state.values[key]||'';
+  pin.checked=!!state.locks[key];
+ }
+ document.getElementById('v17status').textContent=`${Object.keys(CATS).length}カテゴリ・${Object.values(CATS).reduce((n,f)=>n+Object.keys(f).length,0)}項目｜固定 ${Object.values(state.locks).filter(Boolean).length}件`;
+}
+function v17Change(i,value){const [,cat,field]=V17_FIELDS[i];setValue(K(cat,field),value);renderOther();v17Sync()}
+function v17Lock(i,checked){const [,cat,field]=V17_FIELDS[i];setLock(K(cat,field),checked);v17Sync()}
+function v17Toggle(id){const p=document.getElementById(id);if(!p)return;p.classList.toggle('v17-hide');if(!p.classList.contains('v17-hide'))p.scrollIntoView({behavior:'smooth',block:'start'})}
+function v17Open(id){const p=document.getElementById(id);if(!p)return;p.classList.remove('v17-hide');p.scrollIntoView({behavior:'smooth',block:'start'})}
+// Refresh quick-setting controls after actions from legacy UI, without touching persisted state.
+for(const f of ['setValue','setLock','roll','resetAll','restoreCase','restorePreset','loadJSON','renderOther']){
+ const old=window[f];if(typeof old!=='function')continue;
+ window[f]=function(...args){const result=old.apply(this,args);v17Sync();return result};
+}
+v17Init();
+</script>
+
+<script>
+// v1.8 formatter: read-only view of original snapshots; never mutates state.values or locks.
+const V18={current:null,mode:'practical'};
+const v18Key=(cat,field)=>cat+' / '+field;
+const v18Get=(v,cat,field)=>v[v18Key(cat,field)]||'';
+function v18Extract(extra){
+ const s=String(extra||''); const o={};
+ const ratios=[...s.matchAll(/(?:縦|横)?\s*(?:9\s*[:：]\s*16|3\s*[:：]\s*4|2\s*[:：]\s*3|1\s*[:：]\s*1|16\s*[:：]\s*9|4\s*[:：]\s*3)/g)];
+ if(ratios.length)o['画面比率']=ratios[ratios.length-1][0].replace(/\s/g,'').replace('：',':');
+ if(/カメラ目線/.test(s))o['視線']='カメラ目線';
+ const people=[...s.matchAll(/(?:^|[、，,\s])([1-9])\s*人(?:で|の|を|、|，|,|\s|$)/g)];
+ if(people.length)o['人数']=people[people.length-1][1]+'人';
+ return o;
+}
+function v18Normalize({values,locks={},extra=''}){
+ const original={...values},resolved={...values},issues=[],overrides=v18Extract(extra);
+ const get=(cat,f)=>v18Get(resolved,cat,f),key=v18Key;
+ const add=(id,fields,reason,before,after,review=false)=>issues.push({id,fields,reason,before:String(before||''),after:String(after||''),requiresReview:review});
+ const assign=(cat,f,newValue,id,reason)=>{
+  const k=key(cat,f),before=resolved[k]||'';
+  if(!before||before===newValue)return;
+  if(locks[k]){add(id,[k],reason+'（固定値を優先、要確認）',before,newValue,true);return;}
+  resolved[k]=newValue;add(id,[k],reason,before,newValue);
+ };
+ const cc='撮影・出力',pc='人物・スタイリング',cl='色・配色',sc='ショーツ・基本形状';
+ if(overrides['画面比率']){const v=get(cc,'画面比率'),desired=overrides['画面比率'];if(v&&v!==desired)assign(cc,'画面比率',desired,'R01','追加指定の画面比率を優先');else if(!v)resolved[key(cc,'画面比率')]=desired;}
+ if(overrides['視線']){const v=get(pc,'視線');if(v&&v!==overrides['視線'])assign(pc,'視線',overrides['視線'],'R02a','明示されたカメラ目線を優先');}
+ if(overrides['人数']){const v=get(pc,'人数');if(v&&v!==overrides['人数'])assign(pc,'人数',overrides['人数'],'R06','追加指定の人数を優先');}
+ if(get(pc,'視線')==='カメラ目線'&&/下向き|手元|下を見る|伏し目/.test(get(pc,'顔の向き'))){assign(pc,'顔の向き','顔をカメラへ向ける','R02b','視線と顔向きの整合性');}
+ const hair=get(pc,'髪の長さ'),style=get(pc,'髪型');
+ if(/ベリーショート|ショート/.test(hair)&&/お団子|ポニーテール|三つ編み|シニヨン|編み込み/.test(style)){
+ const hk=key(pc,'髪の長さ'),sk=key(pc,'髪型');
+ if(locks[hk]&&locks[sk])add('R03',[hk,sk],'髪の長さと髪型が両方固定されており自動補正できません',hair+' / '+style,'要確認',true);
+ else if(locks[hk])assign(pc,'髪型','ショートヘア','R03','固定した髪の長さを優先');
+ else assign(pc,'髪の長さ','ミディアム','R03','まとめ髪に必要な長さを確保');
+ }
+ if(get(cl,'配色方式')==='単色統一'&&get(cl,'主色')&&get(cl,'副色')&&get(cl,'主色')!==get(cl,'副色'))assign(cl,'配色方式','2色ブロック','R05','異なる主色・副色と単色統一が競合');
+ if(get(sc,'ウエスト形状')==='幅広バンド'&&get(sc,'ウエストバンド幅')==='なし'){
+ const a=key(sc,'ウエスト形状'),b=key(sc,'ウエストバンド幅');
+ if(locks[a]&&locks[b])add('R09',[a,b],'ウエストの指定が両方固定', '幅広バンド / なし','要確認',true);
+ else if(locks[b])assign(sc,'ウエスト形状','ストレート','R09','固定されたバンド幅を優先');
+ else assign(sc,'ウエストバンド幅','幅広','R09','ウエスト形状とバンド幅を一致');
+ }
+ if(get(cc,'画角')&&/顔|上半身|バストアップ/.test(get(cc,'画角'))&&(/上下|ショーツ/.test(extra)))add('R07',[key(cc,'画角')],'上半身画角ではショーツ全体が画面に入らない可能性','画角：'+get(cc,'画角'),'画角を広げるか要確認',true);
+ // Known constraints are warnings; do not silently rewrite unusual garment designs.
+ if(get(sc,'基本タイプ')==='ブラジリアン'&&get(sc,'背面形状')==='ボーイショーツ型')add('R11',[key(sc,'基本タイプ'),key(sc,'背面形状')],'通常と異なる背面構造。物理的な成立を要確認','ブラジリアン / ボーイショーツ型','元データを維持',true);
+
+ // v2.5: orientation + introduction pose + camera are validated against garment display intent.
+ const pose=get(cc,'紹介ポーズ'),dir=get(pc,'身体の向き'),camera=get(cc,'カメラ方向'),frame=get(cc,'画角');
+ const poseBack=/背面|振り返り|斜め後ろ/.test(pose);
+ const dirBack=/背面|後ろ|振り返り/.test(dir);
+ const camBack=/後方|後ろ|肩越し/.test(camera);
+ const backGoal=poseBack||/背面デザイン|背面紹介|後ろのデザイン/.test(extra);
+ if(backGoal&&!dirBack){
+  if(!locks[key(pc,'身体の向き')])assign(pc,'身体の向き','背面から肩越しに振り返る','V25B01','背面紹介ポーズに合わせて身体の向きを調整');
+  else add('V25B01',[key(pc,'身体の向き'),key(cc,'紹介ポーズ')],'背面紹介なのに人物の向きが背面を示していない',dir,pose,true);
+ }
+ if(backGoal&&!camBack){
+  if(!locks[key(cc,'カメラ方向')])assign(cc,'カメラ方向','斜め後方45度','V25B02','衣装の背面意匠を見せるためカメラ位置を調整');
+  else add('V25B02',[key(cc,'カメラ方向'),key(cc,'紹介ポーズ')],'背面紹介と固定カメラ方向が競合',camera,'斜め後方45度',true);
+ }
+ if(backGoal&&/顔|上半身/.test(frame)){
+  if(!locks[key(cc,'画角')])assign(cc,'画角','腰上','V25B03','背面デザインを見せるため画角を広げる');
+  else add('V25B03',[key(cc,'画角')],'背面紹介では固定の狭い画角に衣装の意匠が入りにくい',frame,'腰上以上を推奨',true);
+ }
+ if(/髪を持ち上げる/.test(pose)&&/ショート|ボブ|ウルフ/.test(style)){
+  add('V25B04',[key(cc,'紹介ポーズ'),key(pc,'髪型')],'短い髪では持ち上げる動作が不自然になる可能性',pose+' / '+style,'髪の位置を整える演出を推奨',true);
+ }
+ if(/ウォーキング|歩きかけ/.test(pose)&&/展示台を整える|資料を手渡す|お辞儀/.test(get('展示場所・業務','仕事中の動作'))){
+  add('V25B05',[key(cc,'紹介ポーズ'),key('展示場所・業務','仕事中の動作')],'移動中のポーズと静止作業が競合',pose,'作業場面を分けるか要確認',true);
+ }
+ if(/メタリック/.test(get(cl,'主色'))&&get('素材・生地表現','表面質感')==='マット'){
+  add('V25C01',[key(cl,'主色'),key('素材・生地表現','表面質感')],'メタリック色とマット質感が競合。色名と素材表現を確認',get(cl,'主色')+' / マット','元データを維持',true);
+ }
+ return {original,resolved,issues,unresolved:issues.filter(x=>x.requiresReview),extra:String(extra||''),locks:{...locks}};
+}
+function v18Format(n,mode){
+ const v=n.resolved,pk=(c,f)=>v18Get(v,c,f),pc='人物・スタイリング',bc='ブラ・基本形状',sc='ショーツ・基本形状',mt='素材・生地表現',cl='色・配色',de='装飾・モチーフ',bd='ブランド・デザイン思想',ev='展示場所・業務',ca='撮影・出力';
+ const fmt=(cat,fields)=>fields.map(f=>pk(cat,f)?f+'は'+pk(cat,f):'').filter(Boolean).join('、');
+ const parts=[];const base=pk(ca,'画面比率')||'縦9:16';
+ parts.push(`${base}、自然な実写写真、1枚、コラージュなし。20〜39歳の成人日本人女性による新作ランジェリーの非性的な商業ファッション展示。`);
+ parts.push(`${pk(pc,'人数')||'1人'}の成人日本人女性。${fmt(pc,mode==='short'?['年齢','髪型','髪色','視線']:['年齢','顔立ち','髪型','髪色','メイク','表情','視線'])}。`);
+ parts.push(`${fmt(bd,mode==='short'?['ブランド系統','コレクション題材']:['ブランド系統','コレクション題材','時代感'])}。${fmt(cl,mode==='short'?['主色','副色']:['主色','副色','配色方式','金具色'])}。`);
+ parts.push(`ブラは${fmt(bc,mode==='short'?['基本タイプ','カップ上端','肩紐の数と形']:['基本タイプ','カップ上端','カップ縫製','アンダーバンド','肩紐の数と形','カップの素材分割','背面ストラップ'])}。`);
+ parts.push(`ショーツは${fmt(sc,mode==='short'?['基本タイプ','股上','脚ぐり']:['基本タイプ','股上','脚ぐり','前面の形','サイド構造','ウエスト形状','裾の処理'])}。`);
+ parts.push(`素材と装飾は${fmt(mt,mode==='short'?['主素材','レース種類']:['主素材','副素材','レース種類','表面質感','生地配置','ブラの素材配置','ショーツの素材配置'])}。${fmt(de,mode==='short'?['主モチーフ']:['主モチーフ','刺繍技法','装飾パーツ','装飾配置'])}。`);
+ parts.push(`${fmt(ev,mode==='short'?['場所','仕事中の動作']:['場所','ブース造形','ブース配色','展示物','仕事中の動作','仕事中の小物','照明演出'])}。`);
+ parts.push(`撮影条件：${fmt(ca,mode==='short'?['画角','カメラ方向','被写体占有率','紹介ポーズ']:['画角','被写体占有率','カメラ方向','カメラ高さ','写真スタイル','背景ぼけ','紹介ポーズ'])}。`);
+ // Selected fixed values are not discarded when the prompt is shortened.
+ const used=new Set();for(const cat of [pc,bc,sc,mt,cl,de,bd,ev,ca]){
+  const allowed={};for(const f of Object.keys(CATS[cat]||{})){if(parts.join(' ').includes(f+'は'))used.add(v18Key(cat,f));}
+ }
+ const mandatory=Object.entries(n.locks).filter(([k,on])=>on&&v[k]&&!used.has(k)).map(([k])=>k.split(' / ')[1]+'：'+v[k]);
+ if(mandatory.length)parts.push('固定指定：'+mandatory.join('、')+'。');
+ if(n.extra)parts.push('追加指定：'+n.extra+'。');
+ if(n.unresolved.length)parts.push('確認が必要な競合：'+n.unresolved.map(x=>x.id).join('、')+'（詳細は矛盾チェック参照）。');
+ return parts.filter(Boolean).join('\n\n');
+}
+function v18Report(n){if(!n.issues.length)return '検出可能な競合はありません。\n※全ての組み合わせの妥当性を保証するものではありません。';return n.issues.map((x,i)=>`${i+1}. ${x.id} ${x.requiresReview?'⚠ 要確認':'✓ 出力用に補正'}\n項目：${x.fields.map(k=>k.split(' / ')[1]).join('・')}\n補正前：${x.before}\n補正後：${x.after}\n理由：${x.reason}`).join('\n\n');}
+function v18Before(n){return n.issues.length?n.issues.map(x=>`【${x.id}】${x.reason}\n補正前：${x.before}\n補正後：${x.after}${x.requiresReview?'（未解決）':''}`).join('\n\n'):'補正した項目はありません。';}
+function v18Show(values,extra,number=0,locks=state.locks){V18.current={values:{...values},extra:String(extra||''),number,locks:{...locks}};v18Render();}
+function v18SetMode(mode){V18.mode=mode;v18Render();}
+function v18Output(){if(!V18.current)return '抽選結果がありません。';const c=V18.current,n=v18Normalize(c);if(V18.mode==='detail')return build(c.values,c.number,c.extra);if(V18.mode==='issues')return v18Report(n);return v18Format(n,V18.mode);}
+function v18Render(){document.querySelectorAll('#v18tabs button').forEach(b=>b.classList.toggle('active',b.dataset.mode===V18.mode));const str=v18Output();document.getElementById('v18result').textContent=str;const n=V18.current?v18Normalize(V18.current):null;document.getElementById('v18meta').textContent=V18.current?`${{detail:'詳細構想',practical:'実用版',short:'短縮版',issues:'矛盾チェック'}[V18.mode]}・${str.length}文字／競合 ${n.issues.length}件（要確認 ${n.unresolved.length}件）`:'抽選後に出力を表示します。';document.getElementById('v18before').hidden=true;}
+async function v18Copy(){const txt=v18Output();try{await navigator.clipboard.writeText(txt);document.getElementById('v18status').textContent='コピーしました。';}catch(e){const a=document.createElement('textarea');a.value=txt;document.body.append(a);a.select();document.execCommand('copy');a.remove();document.getElementById('v18status').textContent='コピー操作を実行しました。';}}
+function v18ToggleBefore(){const el=document.getElementById('v18before');if(!V18.current)return;el.textContent=v18Before(v18Normalize(V18.current));el.hidden=!el.hidden;}
+function v18SaveTxt(){const blob=new Blob([v18Output()],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ランジェリー_v1.8_'+V18.mode+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function v18Case(kind,i,mode){const x=getCase(kind,i);if(!x)return;v18Show(x.values,x.extra||'',i,x.locks||{});V18.mode=mode;v18Render();document.getElementById('v18panel').scrollIntoView({behavior:'smooth',block:'start'});}
+async function v18CopyCase(kind,i){const x=getCase(kind,i);if(!x)return;const txt=v18Format(v18Normalize({values:x.values,extra:x.extra||'',locks:x.locks||{}}),'short');try{await navigator.clipboard.writeText(txt);document.getElementById('compareMessage').textContent='短縮版をコピーしました。';}catch(e){document.getElementById('compareMessage').textContent='コピーできませんでした。実用版を見るから手動でコピーしてください。';}}
+// Extend existing functions after initialization; legacy actions and saved values remain compatible.
+const v18OldGenerate=generate;generate=function(...args){const result=v18OldGenerate.apply(this,args);v18Show({...state.values},document.getElementById('extra').value,0,state.locks);return result;};
+const v18OldCard=compareCaseCard;compareCaseCard=function(entry,index,kind){const html=v18OldCard(entry,index,kind);return html.replace('</div></article>',`<button class="secondary" onclick="v18Case('${kind}',${index},'practical')">実用版を見る</button><button class="secondary" onclick="v18CopyCase('${kind}',${index})">短縮版コピー</button><button class="secondary" onclick="v18Case('${kind}',${index},'issues')">矛盾チェック</button></div></article>`);};
+const v18OldView=viewCase;viewCase=function(kind,i){v18OldView(kind,i);const x=getCase(kind,i);if(x)v18Show(x.values,x.extra||'',i,x.locks||{});};
+const v18OldRestore=restoreCase;restoreCase=function(kind,i){const x=getCase(kind,i);const result=v18OldRestore(kind,i);if(x)v18Show(x.values,x.extra||'',i,x.locks||{});return result;};
+const v18OldUnique=uniqueCase;uniqueCase=function(values,prefix){const x=v18OldUnique(values,prefix);x.locks={...state.locks};x.schemaVersion='2.0';return x;};
+renderComparisons();v18Render();
+</script>
+<script>
+
+// v1.9: compact schema, compatible draw, and non-destructive migration.
+const V19={version:'1.9',removed:[],warnings:[]};
+const v19Allowed=new Set(ALL_FIELDS.map(x=>x.k));
+const v19Key=(c,f)=>K(c,f);
+function v19Clean(v){let o={};for(const [k,val] of Object.entries(v||{}))if(v19Allowed.has(k)&&FIELD_MAP[k].opts.includes(val))o[k]=val;return o;}
+function v19Migrate(){
+ const before=Object.keys(state.values||{}).length;
+ state.values=v19Clean(state.values);
+ state.locks=Object.fromEntries(Object.entries(state.locks||{}).filter(([k,v])=>v&&v19Allowed.has(k)));
+ if(Array.isArray(state.presets))state.presets=state.presets.map(p=>({...p,values:v19Clean(p.values),locks:Object.fromEntries(Object.entries(p.locks||{}).filter(([k,v])=>v&&v19Allowed.has(k)))}));
+ if(Array.isArray(state.history))state.history=state.history.map(h=>({...h,values:v19Clean(h.values)}));
+ if(typeof compareState!=='undefined'){
+  for(const kind of ['cases','favorites'])if(Array.isArray(compareState[kind]))compareState[kind]=compareState[kind].map(x=>({...x,values:v19Clean(x.values),locks:Object.fromEntries(Object.entries(x.locks||{}).filter(([k,v])=>v&&v19Allowed.has(k)))}));
+  saveCompare();
+ }
+ save();if(before>Object.keys(state.values).length)console.info('v1.9: 廃止項目を除外しました');
+}
+const v19PantBack={
+ 'ブラジリアン':['ブラジリアン','セミバック'], 'タンガ':['タンガ'], 'Tバック':['Tバック'],
+ 'ボーイショーツ':['ボーイショーツ型','フルバック'], 'タップパンツ':['ボーイショーツ型','フルバック'],
+ 'ショート丈キュロット型':['ボーイショーツ型','フルバック'],
+ 'スタンダードブリーフ':['フルバック','セミバック'], 'ビキニ':['フルバック','セミバック','ブラジリアン'],
+ 'ヒップスター':['フルバック','セミバック'], 'フレンチカット':['フルバック','セミバック','ブラジリアン'],
+ 'ハイレッグ':['フルバック','セミバック','ブラジリアン'], 'サイドストラップ型':['セミバック','ブラジリアン','タンガ'],
+ 'ハイウエストブリーフ':['フルバック','セミバック'], 'ローライズブリーフ':['フルバック','セミバック','ブラジリアン']
+};
+function v19Pool(k,result){
+ let opts=(FIELD_MAP[k]?.opts||[]).slice();const P=(f)=>result[v19Key('ショーツ・基本形状',f)];const B=(f)=>result[v19Key('ブラ・基本形状',f)];
+ const base=P('基本タイプ');
+ if(k===v19Key('ショーツ・基本形状','背面形状')&&v19PantBack[base])opts=opts.filter(x=>v19PantBack[base].includes(x));
+ if(k===v19Key('ショーツ・基本形状','股上')){
+  if(base==='ハイウエストブリーフ')opts=opts.filter(x=>['ハイウエスト','超ハイウエスト'].includes(x));
+  if(base==='ローライズブリーフ')opts=opts.filter(x=>['ローライズ','超ローライズ'].includes(x));
+ }
+ if(k===v19Key('ブラ・基本形状','肩紐の数と形')){
+  if(['ストラップレス','バンドゥ'].includes(B('基本タイプ')))opts=opts.filter(x=>x==='肩紐なし');
+  else if(B('基本タイプ')==='ホルターネック')opts=opts.filter(x=>['ホルター','ネックストラップ'].includes(x));
+  else opts=opts.filter(x=>x!=='肩紐なし');
+ }
+ if(k===v19Key('ブラ・基本形状','背面ストラップ')){
+  if(['ストラップレス','バンドゥ'].includes(B('基本タイプ')))opts=opts.filter(x=>['背面ストラップなし','平行'].includes(x));
+  if(B('基本タイプ')==='ホルターネック')opts=opts.filter(x=>['ホルター連動','Y字'].includes(x));
+ }
+ const C=(f)=>result[v19Key('色・配色',f)];
+ if(k===v19Key('色・配色','副色')){
+  if(C('配色方式')==='単色統一')opts=opts.filter(x=>x==='なし');
+  if(['2色ブロック','補色対比'].includes(C('配色方式')))opts=opts.filter(x=>x!==C('主色'));
+ }
+ if(k===v19Key('色・配色','上下の配色関係')&&C('配色方式')==='単色統一')opts=opts.filter(x=>x==='完全一致');
+ return opts;
+}
+const v19Order=[
+ v19Key('ブラ・基本形状','基本タイプ'),v19Key('ショーツ・基本形状','基本タイプ'),
+ v19Key('色・配色','配色方式'),v19Key('色・配色','主色'),
+ ...ALL_FIELDS.map(x=>x.k).filter(k=>!['ブラ・基本形状 / 基本タイプ','ショーツ・基本形状 / 基本タイプ','色・配色 / 配色方式','色・配色 / 主色'].includes(k))
+];
+function v19Pick(k,allowed,overrides){
+ if(!allowed.length)return null;
+ const override=overrides?.[k];if(override&&allowed.includes(override))return override;
+ let pool=eligibleFor(k).filter(x=>allowed.includes(x.v));if(!pool.length)return null;
+ let sum=pool.reduce((a,b)=>a+b.w,0),r=Math.random()*sum;
+ for(const x of pool){r-=x.w;if(r<0)return x.v;}return pool[pool.length-1].v;
+}
+function v19Build(base={},fillMissing=true){
+ const overrides=document.getElementById('mode')?.value==='theme'?themeOverrides():{};
+ const result=v19Clean(base),warn=[];
+ for(const k of v19Order){
+  const permitted=v19Pool(k,result),current=result[k],locked=!!state.locks[k];
+  if(current){
+   if(permitted.includes(current))continue;
+   if(locked){warn.push('固定条件の衝突：'+k+'='+current+'（変更していません）');continue;}
+  }
+  if(!current&&!fillMissing)continue;
+  const chosen=v19Pick(k,permitted,overrides);
+  if(chosen){if(current&&current!==chosen)warn.push(k+'：'+current+' → '+chosen+'（基本タイプとの整合）');result[k]=chosen;}
+  else{if(current&&!locked){delete result[k];warn.push('抽選対象がありません：'+k);}else if(!current){warn.push('候補不足：'+k+'（除外設定を確認）');}}
+ }
+ V19.warnings=warn;const banner=document.getElementById('v19warnings');if(banner)banner.textContent=warn.slice(0,4).join(' / ')+(warn.length>4?' ほか'+(warn.length-4)+'件':'');
+ return result;
+}
+// Keep the parent theme, weights, exclusions, saved locks, and generated output intact.
+const v19OldRoll=roll;
+roll=function(part,rerender=true){
+ const prev={...state.values};const result=v19OldRoll(part,false);
+ state.values=v19Build(state.values,false);
+ if(rerender){renderCards();renderOther();renderSwatches();renderQuick();v17Sync();renderPool();}
+ save();return result;
+};
+snapshot=function(base=state.values){return v19Build(base);};
+randomComparisonValues=function(baseValues=state.values){
+ const base={};for(const k of v19Order)if(state.locks[k]&&baseValues[k])base[k]=baseValues[k];
+ return v19Build(base);
+};
+const v19OldSetValue=setValue;
+setValue=function(k,v){const res=v19OldSetValue(k,v);if(v){state.values=v19Build(state.values,false);save();}return res;};
+const v19OldRestoreCase=restoreCase;
+restoreCase=function(...args){const r=v19OldRestoreCase(...args);state.values=v19Build(state.values,false);renderOther();renderCards();renderSwatches();save();return r;};
+const v19OldRestorePreset=restorePreset;
+restorePreset=function(...args){const r=v19OldRestorePreset(...args);state.values=v19Build(state.values,false);renderOther();renderCards();renderSwatches();save();return r;};
+const v19OldLoadJSON=loadJSON;
+loadJSON=function(e){const old=v19OldLoadJSON(e);setTimeout(()=>{state.values=v19Clean(state.values);renderOther();renderCards();renderSwatches();renderQuick();v17Sync();save();},300);return old;};
+const v19OldFormat=v18Format;
+v18Format=function(n,mode){const s=v19OldFormat(n,mode);return s.replace(/成人女性による新作ランジェリー/g,'20〜39歳の成人日本人女性による新作ランジェリー').replace(/の成人女性。/g,'の成人日本人女性。');};
+// Old data is migrated in-memory, but the saved presets still exist with retained fields.
+v19Migrate();
+renderCards();renderOther();renderSwatches();renderQuick();v17Sync();initPool();renderComparisons();
+
+</script>
+<script>
+window.addEventListener('load', function () {
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    navigator.serviceWorker.register('./sw.js', {scope:'./'}).catch(function(err){console.warn('オフライン機能の登録に失敗:',err);});
+  }
+});
+</script>
+
+<script>
+// v2.0: Keep the underlying schema data canonical; roll and snapshots are inherited from v1.9.
+const V20={version:'2.0'};
+const v20Fabric='素材・生地表現';
+const v20Key=(f)=>K(v20Fabric,f);
+const _v20Pool=v19Pool;
+v19Pool=function(k,result){
+ let opts=_v20Pool(k,result);
+ const main=result[v20Key('主素材')],secondary=result[v20Key('副素材')],lace=result[v20Key('レース種類')];
+ if(k===v20Key('副素材')&&main){
+  // A secondary fabric can be absent, but do not repeatedly select the same named fabric.
+  opts=opts.filter(x=>x==='なし'||x!==main);
+ }
+ if(k===v20Key('レース種類')&&secondary==='なし'){
+  // Independent lace trim remains an option even without a separate secondary fabric.
+  return opts;
+ }
+ if(k===v20Key('ブラの素材配置')||k===v20Key('ショーツの素材配置')){
+  if(!secondary||secondary==='なし')opts=opts.filter(x=>!x.includes('副素材'));
+  if(!lace||lace==='なし')opts=opts.filter(x=>!x.includes('レース'));
+ }
+ return opts;
+};
+// Earlier saved values may still contain the retired transparency level. Never print it.
+function v20CleanSaved(){
+ const old=v20Key('透け感レベル');
+ for(const obj of [state.values,state.locks])if(obj)delete obj[old];
+ const collections=[state.presets,state.history,compareState.cases,compareState.favorites];
+ for(const arr of collections)if(Array.isArray(arr))for(const item of arr){if(item.values)delete item.values[old];if(item.locks)delete item.locks[old];}
+ // Re-validate against new options. A previous fixed occupancy of 85% must not persist invisibly.
+ v19Migrate();
+ saveCompare();
+}
+// Ensure out-of-date category values are cleaned even for imported configurations.
+const v20PreviousLoad=loadJSON;
+loadJSON=function(event){v20PreviousLoad(event);};
+v20CleanSaved();
+// Re-render quick and detailed selectors so the new canonical options appear.
+renderCards();renderOther();renderSwatches();renderQuick();v17Init();renderPool();v18Render();
+const v20Note=document.createElement('p');v20Note.className='hint';
+v20Note.textContent='v2.0：透け感Lv.0〜5を廃止し、主素材・副素材・レースとブラ／ショーツの部位別配置で表現。被写体占有率は30〜90%（10%刻み）。2人以上の場合は合計占有率です。';
+const v20Container=document.getElementById('v17fields')||document.getElementById('details');
+if(v20Container)v20Container.parentNode.insertBefore(v20Note,v20Container);
+</script>
+
+<script>
+// v2.2: palette UI reads the canonical v2.1 options and writes through setValue/setLock.
+const LC_COLOR_HEX={"ブラック":"#17151B","ホワイト":"#FFFFFF","アイボリー":"#FFFFF0","ベージュ":"#D9C3A8","グレー":"#92939B","チャコール":"#3B3C43","シルバー":"#C2C5CC","ゴールド":"#D4AF37","深紅":"#A41124","ワインレッド":"#722438","ローズ":"#C44F74","サーモンピンク":"#FA8E84","ピーチ":"#F9BA9E","コーラル":"#FF806C","オレンジ":"#F58220","アンバー":"#C47E1C","レモンイエロー":"#FFF16D","マスタード":"#C6A43A","ミント":"#A4E5CE","エメラルド":"#00A878","オリーブ":"#777D37","ターコイズ":"#40C7C7","スカイブルー":"#87CEEB","ロイヤルブルー":"#305BCF","ネイビー":"#1A2D55","ラベンダー":"#B9A3DD","ライラック":"#C9A1D8","バイオレット":"#8037C6","プラム":"#713D69","ブラウン":"#79513C","虹色":"rainbow","オーロラ":"aurora","ミルキーホワイト":"#F9F8F4","パールホワイト":"#F3F0E9","オフホワイト":"#F8F7F0","クリーム":"#FFF0C9","エクリュ":"#E8DAC3","サンドベージュ":"#CDB797","トープ":"#918275","モカ":"#96735B","チョコレート":"#4B2E29","ココア":"#76564B","テラコッタ":"#BD6549","コッパー":"#B66A43","ブロンズ":"#997343","シャンパンゴールド":"#E8D2A3","プラチナ":"#D6D8DA","スモーキーグレー":"#89888D","スレートブルー":"#6A7C96","ボルドー":"#68172C","バーガンディ":"#7A2337","ルビーレッド":"#C5213F","チェリーレッド":"#E52D49","ガーネット":"#81344A","フューシャ":"#E82892","マゼンタ":"#CF20A3","ホットピンク":"#FF4D9D","ベビーピンク":"#F8CFDF","ダスティピンク":"#D4A0AD","ローズゴールド":"#CDA191","モーヴ":"#A782A5","ダスティローズ":"#BB8791","アプリコット":"#F3B58A","ペールピーチ":"#F9D9C6","バーミリオン":"#E3442F","ブリックレッド":"#A44136","タンジェリン":"#F88D37","パンプキン":"#DE762E","バターイエロー":"#F8E7A2","ハニーイエロー":"#E2B94E","サフラン":"#F1BE3D","ライム":"#B6D83C","ピスタチオ":"#B5C89A","セージグリーン":"#9AAE9B","モスグリーン":"#566E4C","フォレストグリーン":"#225B3E","ボトルグリーン":"#185743","ピーコックグリーン":"#087D78","ティール":"#157D83","アクア":"#7DDFE0","アイスブルー":"#C9E9F5","パウダーブルー":"#B0D4EC","ベビーブルー":"#BCDDF4","セルリアンブルー":"#258FCE","コバルトブルー":"#2155B7","サファイアブルー":"#194F9C","ミッドナイトブルー":"#14294A","インディゴ":"#484A99","ペリウィンクル":"#919DDC","藤色":"#B7A1D0","スモーキーラベンダー":"#AEA0BE","アメジスト":"#8C66BA","ロイヤルパープル":"#63288E","ディープパープル":"#422258","グレープ":"#764D8C","ダークプラム":"#492747","シャンパンピンク":"#E8C9BE","パールピンク":"#F1CFD8","ミルキーミント":"#D0EADC","オパール":"opal","偏光ブルー":"iridescentblue","偏光ピンク":"iridescentpink","ピンク":"#F3A2C3","レッド":"#D92C43","ブルー":"#347BC8","グリーン":"#3EAC78","パープル":"#8E60BC","なし":"none","主色の濃淡":"tone","ディープターコイズ":"#006D78","トロピカルピンク":"#F52D83","メタリックロイヤルパープル":"#7525B5","エレクトリックバイオレット":"#8F00FF","ネオンマゼンタ":"#F500A8","ラズベリーピンク":"#C72D67","ドラゴンフルーツ":"#E91470","ルビーピンク":"#D92359","ピーコックブルー":"#005F86","ジュエルティール":"#007F86","カリビアンブルー":"#00A9BE","ディープエメラルド":"#00634E","アメジストピンク":"#B469D2","オーキッドパープル":"#A64AC9","インペリアルパープル":"#542080","ミッドナイトバイオレット":"#321452","ローズレッド":"#C61B54","カーマインレッド":"#A91636","シャンパンローズ":"#DCA9B7","メタリックフューシャ":"#CC168C","エレクトリックブルー":"#146BFA","ラグーンブルー":"#008FAD","ピーコックネイビー":"#103F65","ディープペトロール":"#174D55"};
+const LC_COLOR_GROUP={"ブラック":"無彩色・ニュートラル","ホワイト":"無彩色・ニュートラル","アイボリー":"無彩色・ニュートラル","ベージュ":"無彩色・ニュートラル","グレー":"無彩色・ニュートラル","チャコール":"無彩色・ニュートラル","ミルキーホワイト":"無彩色・ニュートラル","パールホワイト":"無彩色・ニュートラル","オフホワイト":"無彩色・ニュートラル","クリーム":"無彩色・ニュートラル","エクリュ":"無彩色・ニュートラル","サンドベージュ":"無彩色・ニュートラル","トープ":"無彩色・ニュートラル","スモーキーグレー":"無彩色・ニュートラル","プラチナ":"無彩色・ニュートラル","シルバー":"無彩色・ニュートラル","深紅":"レッド・ボルドー","ワインレッド":"レッド・ボルドー","ボルドー":"レッド・ボルドー","バーガンディ":"レッド・ボルドー","ルビーレッド":"レッド・ボルドー","チェリーレッド":"レッド・ボルドー","ガーネット":"レッド・ボルドー","バーミリオン":"レッド・ボルドー","ブリックレッド":"レッド・ボルドー","レッド":"レッド・ボルドー","ローズ":"ピンク・ローズ","サーモンピンク":"ピンク・ローズ","フューシャ":"ピンク・ローズ","マゼンタ":"ピンク・ローズ","ホットピンク":"ピンク・ローズ","ベビーピンク":"ピンク・ローズ","ダスティピンク":"ピンク・ローズ","ローズゴールド":"ピンク・ローズ","モーヴ":"ピンク・ローズ","ダスティローズ":"ピンク・ローズ","シャンパンピンク":"ピンク・ローズ","パールピンク":"ピンク・ローズ","ピンク":"ピンク・ローズ","ピーチ":"オレンジ・ブラウン","コーラル":"オレンジ・ブラウン","オレンジ":"オレンジ・ブラウン","アンバー":"オレンジ・ブラウン","アプリコット":"オレンジ・ブラウン","ペールピーチ":"オレンジ・ブラウン","タンジェリン":"オレンジ・ブラウン","パンプキン":"オレンジ・ブラウン","ブラウン":"オレンジ・ブラウン","モカ":"オレンジ・ブラウン","チョコレート":"オレンジ・ブラウン","ココア":"オレンジ・ブラウン","テラコッタ":"オレンジ・ブラウン","コッパー":"オレンジ・ブラウン","ブロンズ":"オレンジ・ブラウン","ゴールド":"イエロー・ゴールド","シャンパンゴールド":"イエロー・ゴールド","レモンイエロー":"イエロー・ゴールド","マスタード":"イエロー・ゴールド","バターイエロー":"イエロー・ゴールド","ハニーイエロー":"イエロー・ゴールド","サフラン":"イエロー・ゴールド","ミント":"グリーン","エメラルド":"グリーン","オリーブ":"グリーン","ライム":"グリーン","ピスタチオ":"グリーン","セージグリーン":"グリーン","モスグリーン":"グリーン","フォレストグリーン":"グリーン","ボトルグリーン":"グリーン","ピーコックグリーン":"グリーン","ミルキーミント":"グリーン","グリーン":"グリーン","ターコイズ":"ブルー・ターコイズ","スカイブルー":"ブルー・ターコイズ","ロイヤルブルー":"ブルー・ターコイズ","ネイビー":"ブルー・ターコイズ","スレートブルー":"ブルー・ターコイズ","ティール":"ブルー・ターコイズ","アクア":"ブルー・ターコイズ","アイスブルー":"ブルー・ターコイズ","パウダーブルー":"ブルー・ターコイズ","ベビーブルー":"ブルー・ターコイズ","セルリアンブルー":"ブルー・ターコイズ","コバルトブルー":"ブルー・ターコイズ","サファイアブルー":"ブルー・ターコイズ","ミッドナイトブルー":"ブルー・ターコイズ","インディゴ":"ブルー・ターコイズ","ペリウィンクル":"ブルー・ターコイズ","ブルー":"ブルー・ターコイズ","ラベンダー":"パープル","ライラック":"パープル","バイオレット":"パープル","プラム":"パープル","藤色":"パープル","スモーキーラベンダー":"パープル","アメジスト":"パープル","ロイヤルパープル":"パープル","ディープパープル":"パープル","グレープ":"パープル","ダークプラム":"パープル","パープル":"パープル","虹色":"特殊色・多色","オーロラ":"特殊色・多色","オパール":"特殊色・多色","偏光ブルー":"特殊色・多色","偏光ピンク":"特殊色・多色","なし":"特殊色・多色","主色の濃淡":"特殊色・多色","ディープターコイズ":"グリーン","トロピカルピンク":"ピンク・ローズ","メタリックロイヤルパープル":"パープル","エレクトリックバイオレット":"パープル","ネオンマゼンタ":"ピンク・ローズ","ラズベリーピンク":"ピンク・ローズ","ドラゴンフルーツ":"ピンク・ローズ","ルビーピンク":"ピンク・ローズ","ピーコックブルー":"ブルー・ターコイズ","ジュエルティール":"グリーン","カリビアンブルー":"ブルー・ターコイズ","ディープエメラルド":"グリーン","アメジストピンク":"ピンク・ローズ","オーキッドパープル":"パープル","インペリアルパープル":"パープル","ミッドナイトバイオレット":"パープル","ローズレッド":"ピンク・ローズ","カーマインレッド":"レッド・ボルドー","シャンパンローズ":"ピンク・ローズ","メタリックフューシャ":"ピンク・ローズ","エレクトリックブルー":"ブルー・ターコイズ","ラグーンブルー":"ブルー・ターコイズ","ピーコックネイビー":"ブルー・ターコイズ","ディープペトロール":"グリーン"};
+const LC_COLOR_KEY=field=>'色・配色 / '+field;
+let lcTab='主色';
+function lcColorCSS(name){
+ const v=LC_COLOR_HEX[name]||'#c2b8cb';
+ if(v==='rainbow')return 'linear-gradient(110deg,#ff5454,#ffbc3b,#f4e95b,#62c88b,#61a7e8,#a65fd0)';
+ if(v==='aurora')return 'linear-gradient(110deg,#71e4c2,#91b4eb,#caa0e9,#f4a9c0)';
+ if(v==='opal')return 'linear-gradient(110deg,#e8e1f8,#c2edf1,#ffdfdf,#f4e8ba)';
+ if(v==='iridescentblue')return 'linear-gradient(115deg,#70a8e9,#a2f0e8,#ad98ef,#74b4e9)';
+ if(v==='iridescentpink')return 'linear-gradient(115deg,#e6a1c4,#ffd3a2,#afa9ee,#eb92ce)';
+ if(v==='none')return 'repeating-linear-gradient(135deg,#fff 0 11px,#eee 11px 22px)';
+ if(v==='tone')return 'linear-gradient(105deg,#45365e,#a998c3,#e5dcef)';
+ return v;
+}
+function lcSetTab(t){lcTab=t;document.getElementById('lcColorGroup').value='';document.getElementById('lcColorSearch').value='';lcRenderColors()}
+function lcRenderColors(){
+ const k=LC_COLOR_KEY(lcTab), arr=CATS['色・配色'][lcTab], now=state.values[k]||'',locked=!!state.locks[k];
+ for(const t of ['主色','副色']){const b=document.getElementById(t==='主色'?'lcMainTab':'lcSubTab');b.classList.toggle('active',lcTab===t);b.setAttribute('aria-selected',String(lcTab===t));}
+ const group=document.getElementById('lcColorGroup');
+ if(!group.options.length){group.innerHTML='<option value="">すべての色系統</option>'+[...new Set(Object.values(LC_COLOR_GROUP))].map(x=>`<option value="${E(x)}">${E(x)}</option>`).join('')}
+ document.getElementById('lcColorLock').checked=locked;
+ const choice=now||'ランダム';
+ document.getElementById('lcCurrent').innerHTML=`<span class="lc-large" style="background:${now?lcColorCSS(now):'linear-gradient(135deg,#ece6f3,#fff)'}"></span><div class="lc-label"><strong>${E(lcTab)}：${E(choice)}</strong><div class="small">${locked?'🔒 固定中：再抽選でも維持':'🎲 固定なし：再抽選で変更'} ／ ${arr.length}候補</div></div>`;
+ const q=document.getElementById('lcColorSearch').value.trim().toLowerCase(), g=group.value;
+ const displayed=arr.filter(v=>(!g||LC_COLOR_GROUP[v]===g)&&(!q||v.toLowerCase().includes(q)));
+ document.getElementById('lcColorGrid').innerHTML=displayed.map(v=>`<button type="button" class="lc-color ${now===v?'active':''}" aria-pressed="${now===v}" data-v="${E(v)}" onclick="lcChoose(this.dataset.v)"><span class="lc-color-sample" style="background:${lcColorCSS(v)}"></span><span class="lc-color-name">${E(v)}</span></button>`).join('')||'<p class="small">該当する色はありません。</p>';
+}
+function lcChoose(v){const k=LC_COLOR_KEY(lcTab);setValue(k,v);renderOther();lcRenderColors()}
+function lcSetRandom(){const k=LC_COLOR_KEY(lcTab);setValue(k,'');setLock(k,false);renderOther();lcRenderColors()}
+function lcSetLock(v){setLock(LC_COLOR_KEY(lcTab),v);lcRenderColors()}
+// Keep gallery in sync with all existing UI mutation paths, including imports and roll actions.
+for(const name of ['setValue','setLock','roll','resetAll','restoreCase','restorePreset','loadJSON','renderOther']){
+ const original=window[name];if(typeof original!=='function')continue;
+ window[name]=function(...args){const value=original.apply(this,args);lcRenderColors();return value};
+}
+lcRenderColors();
+</script>
+<script>
+(function(){
+'use strict';
+const PERSON='人物・スタイリング',BR='ブラ・基本形状',PT='ショーツ・基本形状',MAT='素材・生地表現',COL='色・配色',DEC='装飾・モチーフ';
+const editable=[PERSON,BR,PT,MAT,COL,DEC];
+const key=(c,f)=>c+' / '+f;
+const countOf=v=>Math.max(1,Math.min(3,parseInt(v[key(PERSON,'人数')],10)||1));
+const distinct=new Set(['魅力度','顔の方向性','髪型','髪色','ヘアカラー技法','顔立ち','メイク','表情','アクセサリー','身体の向き','基本タイプ','カップ上端','カップ縫製','カップの素材分割','アンダーバンド','トップライン装飾','股上','脚ぐり','前面の形','ウエスト形状','飾りレース配置','主素材','副素材','レース種類','ブラの素材配置','ショーツの素材配置','主モチーフ','刺繍技法','装飾配置','装飾パーツ']);
+const featureSets={
+ '顔の輪郭':['卵型で高い頬骨','丸顔で柔らかな輪郭','面長で細い顎','逆三角形の顎と高い頬骨','角張った輪郭と明瞭な顎'],
+ '目の形':['切れ長の一重','丸みのある大きな二重','涼しげな奥二重','アーモンド形の二重','やや垂れ目の二重'],
+ '鼻の特徴':['小ぶりで丸い鼻先','細く長い鼻筋','短めで直線的な鼻筋','鼻筋の通った高めの鼻'],
+ '口元':['薄い唇とまっすぐな口角','ふっくらした唇','小さな口と上がった口角','広めの口と薄い上唇'],
+ '前髪・分け目':['センター分け','斜め分け','薄い前髪','前髪なし','横に流した前髪'],
+ '衣装の独自アクセント':['刺繍を左上に集中','中央に縦切替のパネル','裾に繊細なフリル','左右でレースの配置を変える','カップ縁を花びら状に仕上げる'],
+ '配色バランス':['主色を主体、副色は縁取り','副色を主体、主色は刺繍','同じ色を淡色寄りに配分','同じ色を濃色寄りに配分']
+};
+const enabledDefault={};
+for(const c of editable)for(const f of Object.keys(CATS[c])){
+ if(c===PERSON&&f==='人数')continue;
+ const k=key(c,f);
+ enabledDefault[k]=distinct.has(f)&&!(c===COL) || (c===COL&&f==='上下の配色関係');
+}
+// Preserve legacy localStorage state key; new per-model settings live alongside old values.
+state.lcPeople=state.lcPeople||{enabled:true,overrides:[{},{},{}],locks:[{},{},{}],features:[{},{},{}],featureLocks:[{},{},{}]};
+const getP=()=>{const p=state.lcPeople||{};p.overrides=Array.isArray(p.overrides)?p.overrides:[{},{},{}];p.locks=Array.isArray(p.locks)?p.locks:[{},{},{}];p.features=Array.isArray(p.features)?p.features:[{},{},{}];p.featureLocks=Array.isArray(p.featureLocks)?p.featureLocks:[{},{},{}];for(let i=0;i<3;i++){p.overrides[i]??={};p.locks[i]??={};p.features[i]??={};p.featureLocks[i]??={}}if(p.enabled===undefined)p.enabled=true;state.lcPeople=p;return p;};
+const own=(obj,k)=>Object.prototype.hasOwnProperty.call(obj,k);
+const rotate=(items,offset)=>items[offset%items.length];
+function choose(k,others,common,globalLocked){
+ if(globalLocked)return common||'';
+ // 人物間の強制重複回避を廃止：有効候補と各倍率に基づく独立抽選。
+ return weightedPick(k)??common??'';
+}
+function makePeople(v,baseP=getP()){
+ if(baseP.enabled===false||countOf(v)===1)return [];
+ const total=countOf(v),out=[],used={};
+ for(let i=0;i<total;i++){
+  const values={},features={},locks=baseP.locks[i]||{},over=baseP.overrides[i]||{};
+  for(const cat of editable)for(const f of Object.keys(CATS[cat])){
+   if(cat===PERSON&&f==='人数')continue;
+   const k=key(cat,f),common=v[k]||state.values[k]||'';
+   const sharedLocked=!!state.locks[k];
+   // Individual settings apply only to fields that the user opted to customize.
+   const active=own(over,k)?over[k]!==null:!!enabledDefault[k];
+   if(!active){values[k]=common;continue}
+   if(sharedLocked){values[k]=common;continue}
+   if(locks[k]&&over[k])values[k]=over[k];
+   else if(over[k]&&!locks[k])values[k]=choose(k,used[k]||[],common,false);
+   else values[k]=choose(k,used[k]||[],common,false);
+   (used[k]??=[]).push(values[k]);
+  }
+  for(const [f,choices] of Object.entries(featureSets)){
+   const before=out.map(o=>o.features[f]);const prev=baseP.features[i]?.[f];
+   if(baseP.featureLocks[i]?.[f]&&prev)features[f]=prev;
+   else features[f]=rotate(choices.filter(x=>!before.includes(x)).length?choices.filter(x=>!before.includes(x)):choices,Math.floor(Math.random()*choices.length));
+  }
+  out.push({values,features,locks:{...locks}});
+ }
+ return out;
+}
+function attach(v){const x={...v};if(getP().enabled&&countOf(v)>1)x.__lcPeople=makePeople(v);return x;}
+function describe(v,compact=false){
+ const ppl=v.__lcPeople;if(!Array.isArray(ppl)||ppl.length<2)return '';
+ const groups=compact?[[PERSON,['年齢','魅力度','顔の方向性','髪型','髪色','ヘアカラー技法','顔立ち','メイク']],[BR,['基本タイプ','カップ上端','アンダーバンド','肩紐の数と形']],[PT,['基本タイプ','股上','脚ぐり']],[COL,['主色','副色']],[MAT,['主素材','レース種類']],[DEC,['主モチーフ','刺繍技法']]]:editable.map(c=>[c,Object.keys(CATS[c]).filter(f=>!(c===PERSON&&f==='人数'))]);
+ const lines=['【複数人の独立デザイン・優先指定】全員を明確に異なる成人日本人女性として描く。同じ顔の複製・同じ衣装のコピーを避ける。ブランド・展示会場・撮影条件は共通。以下の人物ごとの指定は共通衣装説明より優先する（固定値は優先維持）。'];
+ ppl.forEach((p,i)=>{
+  lines.push(`■ 人物${String.fromCharCode(65+i)}（${ppl.length===2?(i===0?'画面左':'画面右'):['画面左','画面中央','画面右'][i]}）`);
+  const ff=p.features||{};lines.push(`人物の顔は自然で魅力的な調和を優先し、別人として描く。輪郭の印象：${ff['顔の輪郭']}。目元の印象：${ff['目の形']}。前髪・分け目：${ff['前髪・分け目']}。鼻と口元は自然なバランスを優先する。`);
+  for(const [c,fs] of groups){const txt=fs.filter(f=>p.values[key(c,f)]).map(f=>f+'：'+p.values[key(c,f)]).join('、');if(txt)lines.push(c+'：'+txt+'。')}
+  lines.push(`固有の衣装アクセント：${ff['衣装の独自アクセント']}。配色バランス：${ff['配色バランス']}。`);
+ });
+ lines.push('各人物の顔を別人として描き、カップの形、縁取り、ショーツの形、レース・刺繍の配置を見分けられるようにする。固定された仕様が共通の場合は形状を変えず、非固定の意匠で違いを出す。非性的な商業ファッション展示。');
+ return lines.join('\n');
+}
+// Wrap common build & short/practical formatting without removing any legacy fields.
+const oldBuild=window.build;window.build=function(v,i,extra){const result=oldBuild(v,i,extra);const detail=describe(v,false);return detail?result+'\n\n'+detail:result;};
+const oldFormat=window.v18Format;window.v18Format=function(n,mode){const result=oldFormat(n,mode);const extra=describe(n.original,mode==='short');return extra?result+'\n\n'+extra:result;};
+const oldSnapshot=window.snapshot;window.snapshot=function(...args){return attach(oldSnapshot.apply(this,args));};
+const oldComparison=window.randomComparisonValues;window.randomComparisonValues=function(...args){return attach(oldComparison.apply(this,args));};
+// Generate also persists the per-person candidate alongside every saved comparison.
+const oldRestore=window.restoreCase;window.restoreCase=function(...args){const r=oldRestore.apply(this,args);lcRenderPerson();return r;};
+const oldSavePreset=window.savePreset;window.savePreset=function(...args){const r=oldSavePreset.apply(this,args);const p=state.presets.at(-1);if(p)p.lcPeople=JSON.parse(JSON.stringify(getP()));save();return r;};
+const oldRestorePreset=window.restorePreset;window.restorePreset=function(i){const r=oldRestorePreset.apply(this,arguments);const p=state.presets[i];if(p?.lcPeople)state.lcPeople=JSON.parse(JSON.stringify(p.lcPeople));lcRenderPerson();save();return r;};
+const oldReset=window.resetAll;window.resetAll=function(){const r=oldReset.apply(this,arguments);if(!Object.keys(state.values).length){state.lcPeople={enabled:true,overrides:[{},{},{}],locks:[{},{},{}],features:[{},{},{}],featureLocks:[{},{},{}]};lcRenderPerson()}return r;};
+const oldLoad=window.loadJSON;window.loadJSON=function(e){const r=oldLoad.call(this,e);setTimeout(lcRenderPerson,150);return r;};
+let currentTab=0;
+window.lcTogglePersonMode=function(mode){getP().enabled=mode==='on';save();lcRenderPerson()};
+window.lcChoosePerson=function(i){currentTab=i;lcRenderPerson()};
+window.lcPersonSet=function(i,k,val){const p=getP(),v=p.overrides[i];if(val==='__auto__'){delete v[k];p.locks[i][k]=false}else if(val==='__common__'){v[k]=null;p.locks[i][k]=false}else{v[k]=val;p.locks[i][k]=true}save();lcRenderPerson()};
+window.lcPersonLock=function(i,k,on){getP().locks[i][k]=on;save();lcRenderPerson()};
+window.lcPersonFeature=function(i,f,v){getP().features[i][f]=v;getP().featureLocks[i][f]=true;save();lcRenderPerson()};
+window.lcPersonFeatureLock=function(i,f,on){getP().featureLocks[i][f]=on;save();lcRenderPerson()};
+window.lcRerollPeople=function(){const v=window.snapshot({...state.values});state.values.__lcPeople=v.__lcPeople||[];save();lcRenderPerson();document.getElementById('lcPersonStatus').textContent='人物別の抽選結果を更新しました。構想生成・実用版に反映されます。';};
+window.lcRenderPerson=function(){
+ const p=getP(),count=countOf(state.values);document.getElementById('lcPersonMode').value=p.enabled?'on':'off';
+ const tabs=document.getElementById('lcPersonTabs'),ed=document.getElementById('lcPersonEditor');
+ document.getElementById('lcPersonStatus').textContent=count===1?'人数を2人または3人にすると人物別設定を編集できます。':`現在${count}人。${p.enabled?'人物ごとの顔と衣装を独立して抽選します':'全員共通の仕様で出力します'}。`;
+ if(count===1||!p.enabled){tabs.innerHTML='';ed.innerHTML='';return}
+ currentTab=Math.min(currentTab,count-1);tabs.innerHTML=Array.from({length:count},(_,i)=>`<button type="button" class="${currentTab===i?'active':''}" onclick="lcChoosePerson(${i})">人物${String.fromCharCode(65+i)}</button>`).join('');
+ const i=currentTab,over=p.overrides[i]||{},locks=p.locks[i]||{};
+ const profile=state.values.__lcPeople?.[i];
+ let html='<div class="lc-person-identity"><b>人物'+String.fromCharCode(65+i)+'</b>　共通設定に対してこの人物だけ変更できます。共通側の🔒固定は優先されます。<p class="small">未選択の項目は共通仕様を使用。自動差別化対象の項目は生成時に人物別で抽選されます。</p></div>';
+ html+='<details class="lc-person-group" open><summary>顔の識別情報（個人差を強調）</summary><div class="lc-person-grid">';
+ for(const [f,opts] of Object.entries(featureSets)){
+  const val=p.features[i]?.[f]||profile?.features?.[f]||'';
+  html+=`<div class="lc-person-field"><label>${E(f)}</label><select onchange="lcPersonFeature(${i},${JSON.stringify(f)},this.value)"><option value="">🎲 自動抽選</option>${opts.map(o=>`<option value="${E(o)}" ${o===val?'selected':''}>${E(o)}</option>`).join('')}</select><div class="subrow"><label><input type="checkbox" ${p.featureLocks[i]?.[f]?'checked':''} onchange="lcPersonFeatureLock(${i},${JSON.stringify(f)},this.checked)"> 🔒 固定</label></div></div>`;
+ }
+ html+='</div></details>';
+ for(const cat of editable){
+  const fields=Object.keys(CATS[cat]).filter(f=>!(cat===PERSON&&f==='人数'));
+  html+=`<details class="lc-person-group" ${cat===PERSON?'open':''}><summary>${E(cat)}（${fields.length}項目）</summary><div class="lc-person-grid">`;
+  for(const f of fields){const k=key(cat,f),common=state.values[k]||'',sel=own(over,k)?over[k]:undefined,lock=!!locks[k],globalLock=!!state.locks[k];
+   const label=sel===null?'__common__':sel||'__auto__';
+   const opts=`<option value="__auto__" ${label==='__auto__'?'selected':''}>🎲 人物別に自動抽選</option><option value="__common__" ${label==='__common__'?'selected':''}>共通仕様を使用（${E(common||'未指定')}）</option>`;
+   html+=`<div class="lc-person-field"><label>${E(f)} ${globalLock?'（共通🔒固定）':''}</label><select ${globalLock?'disabled':''} onchange="lcPersonSet(${i},${JSON.stringify(k)},this.value)">${opts}${CATS[cat][f].map(x=>`<option value="${E(x)}" ${label===x?'selected':''}>${E(x)}</option>`).join('')}</select><div class="subrow"><span class="small">${enabledDefault[k]?'基本：人物別':'基本：共通'}</span><label><input type="checkbox" ${lock?'checked':''} ${globalLock?'disabled':''} onchange="lcPersonLock(${i},${JSON.stringify(k)},this.checked)"> 🔒 個別固定</label></div></div>`;
+  }
+  html+='</div></details>';
+ }
+ ed.innerHTML=html;
+};
+for(const name of ['setValue','roll','generate','resetAll','restorePreset','loadJSON']){if(name==='resetAll'||name==='restorePreset'||name==='loadJSON')continue;const old=window[name];window[name]=function(...args){const r=old.apply(this,args);lcRenderPerson();return r;}}
+lcRenderPerson();
+})();
+</script>
+
+<script>
+// v2.5 quick pose selector; canonical value lives in the existing state/lock fields.
+(function(){
+ const k='撮影・出力 / 紹介ポーズ';
+ window.v25SyncPose=function(){
+  const sel=document.getElementById('v25PoseSelect'),lock=document.getElementById('v25PoseLock');if(!sel)return;
+  sel.innerHTML='<option value="">🎲 ランダム</option>'+CATS['撮影・出力']['紹介ポーズ'].map(x=>'<option value="'+E(x)+'">'+E(x)+'</option>').join('');
+  sel.value=state.values[k]||''; lock.checked=!!state.locks[k];
+  document.getElementById('v25PoseInfo').textContent='15種類の姿勢。仕事中の動作や身体の向きも別々に設定できます。固定した値は保持します。';
+ };
+ window.v25SetPose=function(v){setValue(k,v);renderOther();v25SyncPose();v17Sync();};
+ window.v25SetPoseLock=function(v){setLock(k,v);v25SyncPose();};
+ window.v25PoseRandom=function(){if(state.locks[k]){document.getElementById('v25PoseInfo').textContent='🔒 固定を解除すると再抽選できます。';return;}const value=weightedPick(k);if(value===null){document.getElementById('v25PoseInfo').textContent='候補がすべて除外されています。';return;}setValue(k,value);renderOther();v25SyncPose();};
+ window.v25OpenPose=function(){document.getElementById('v25PosePanel').scrollIntoView({behavior:'smooth',block:'start'});};
+ for(const name of ['roll','generate','resetAll','restorePreset','loadJSON']){
+  const orig=window[name];if(typeof orig!=='function')continue;
+  window[name]=function(...args){const result=orig.apply(this,args);v25SyncPose();return result;};
+ }
+ v25SyncPose();v17Sync();
+})();
+</script>
+<script>
+/* v2.6.1 focused compatibility and rendering fixes. Keep older saved data keys. */
+(function(){
+ 'use strict';
+ const PC='人物・スタイリング', keys=['魅力度','顔の方向性','髪型','髪色','ヘアカラー技法','顔立ち','メイク','表情','視線'];
+ const K2=(c,f)=>c+' / '+f;
+ const clone=x=>JSON.parse(JSON.stringify(x));
+ const peopleCount=v=>Math.max(1,Math.min(3,parseInt(v[K2(PC,'人数')],10)||1));
+ const validPeople=(v)=>Array.isArray(v?.__lcPeople)&&v.__lcPeople.length===peopleCount(v)&&peopleCount(v)>1;
+ const originalSnapshot=window.snapshot;
+ window.snapshot=function(base){
+   const source=base||state.values;
+   const current=source.__lcPeople;
+   // Keep the last independently rolled profiles until the user explicitly rerolls.
+   const result=originalSnapshot.call(this,source);
+   if(validPeople(source) && state.lcPeople?.enabled!==false)result.__lcPeople=clone(current);
+   else if(peopleCount(result)===1 || state.lcPeople?.enabled===false)delete result.__lcPeople;
+   return result;
+ };
+ const oldPersonReroll=window.lcRerollPeople;
+ window.lcRerollPeople=function(){
+   const base={...state.values};delete base.__lcPeople;
+   const fresh=originalSnapshot.call(this,base);
+   state.values.__lcPeople=fresh.__lcPeople||[];
+   save();lcRenderPerson();
+   document.getElementById('lcPersonStatus').textContent='人物別の再抽選結果を保存しました。次の構想生成にも反映されます。';
+ };
+ // When the number of people changes, discard outdated profiles. Other common changes
+ // retain profiles; each per-person field marked as common is refreshed when generating.
+ const oldSetValue=window.setValue;
+ window.setValue=function(k,v){
+   const result=oldSetValue.apply(this,arguments);
+   if(k===K2(PC,'人数'))delete state.values.__lcPeople;
+   return result;
+ };
+ const oldPersonSet=window.lcPersonSet;
+ window.lcPersonSet=function(i,k,v){oldPersonSet.apply(this,arguments);delete state.values.__lcPeople;save();lcRenderPerson();};
+ const oldPersonLock=window.lcPersonLock;
+ window.lcPersonLock=function(i,k,v){oldPersonLock.apply(this,arguments);delete state.values.__lcPeople;save();lcRenderPerson();};
+ const oldFeature=window.lcPersonFeature;
+ window.lcPersonFeature=function(i,f,v){
+   if(v===''){
+     const p=state.lcPeople;p.features[i]??={};p.featureLocks[i]??={};
+     delete p.features[i][f];p.featureLocks[i][f]=false;
+     delete state.values.__lcPeople;save();lcRenderPerson();return;
+   }
+   oldFeature.apply(this,arguments);delete state.values.__lcPeople;save();lcRenderPerson();
+ };
+ const oldFeatureLock=window.lcPersonFeatureLock;
+ window.lcPersonFeatureLock=function(i,f,v){oldFeatureLock.apply(this,arguments);delete state.values.__lcPeople;save();lcRenderPerson();};
+ const oldToggle=window.lcTogglePersonMode;
+ window.lcTogglePersonMode=function(v){oldToggle.apply(this,arguments);delete state.values.__lcPeople;save();};
+ // Remove stale profile on direct common rolling of person fields.
+ const oldRoll=window.roll;
+ window.roll=function(part){const result=oldRoll.apply(this,arguments);if(part==='person'||part==='all'){delete state.values.__lcPeople;save();}return result;};
+ // Keep detailed, legacy report for archival compatibility. Practical/short outputs
+ // avoid repeating conflicting shared face/outfit instructions for multi-person images.
+ const oldFormat=window.v18Format;
+ const pick=(v,c,f)=>v?.[K2(c,f)]||'';
+ const attributes=(v,c,fields)=>fields.map(f=>pick(v,c,f)?`${f}：${pick(v,c,f)}`:'').filter(Boolean).join('、');
+ const hairNotes=(v,ff)=>{
+   const hair=pick(v,PC,'髪型');const fringe=ff?.['前髪・分け目']||'';
+   const conflicts=/ワンレン|前髪なし/.test(hair) && /前髪/.test(fringe)&&fringe!=='前髪なし';
+   return conflicts?'前髪は髪型に合わせ自然に整える':fringe?`前髪・分け目：${fringe}`:'';
+ };
+ const compactFace=(v,ff)=>{
+   const face=[attributes(v,PC,keys),ff?.['顔の輪郭']?`輪郭の印象：${ff['顔の輪郭']}`:'',ff?.['目の形']?`目元の印象：${ff['目の形']}`:'',hairNotes(v,ff)];
+   return face.filter(Boolean).join('。');
+ };
+ window.v18Format=function(n,mode){
+   const original=n.original||{}, resolved=n.resolved||original, ppl=original.__lcPeople;
+   if(!validPeople(original) || state.lcPeople?.enabled===false){
+     let output=oldFormat(n,mode);
+     // One-person images previously omitted the three new appearance categories.
+     if(peopleCount(resolved)===1){
+       const specials=attributes(resolved,PC,['魅力度','顔の方向性','ヘアカラー技法']);
+       if(specials&&!output.includes('魅力度：'))output+='\n\n人物の印象：'+specials+'。顔の特徴は自然な調和を優先する。';
+     }
+     return output;
+   }
+   const short=mode==='short';const lines=[];
+   lines.push(`${pick(resolved,'撮影・出力','画面比率')||'縦9:16'}、自然な実写写真、1枚、コラージュなし。${ppl.length}人の成人日本人女性による非性的な商業ファッション展示。全員別人の顔で描く。`);
+   for(const [cat,fs] of [
+     ['ブランド・デザイン思想',short?['ブランド系統','コレクション題材']:['ブランド系統','コレクション題材','時代感']],
+     ['展示場所・業務',short?['場所','仕事中の動作']:['場所','ブース造形','ブース配色','展示物','仕事中の動作','仕事中の小物','照明演出']],
+     ['撮影・出力',short?['画角','カメラ方向','被写体占有率']:['画角','被写体占有率','カメラ方向','カメラ高さ','写真スタイル','背景ぼけ','紹介ポーズ']]
+   ]){const t=attributes(resolved,cat,fs);if(t)lines.push(`${cat}：${t}。`);}
+   lines.push('以下の人物別衣装・容姿を優先する。共通値は人物別指定と競合させない。');
+   ppl.forEach((person,i)=>{
+     const v={...resolved,...(person.values||{})}, ff=person.features||{};
+     const side=ppl.length===2?['左','右'][i]:['左','中央','右'][i];
+     lines.push(`■ 人物${'ABC'[i]}（画面${side}）`);
+     lines.push(compactFace(v,ff)+'。顔の自然なバランスを保つ。鼻・口元の細かな強制指定はしない。');
+     for(const [cat,fs] of [
+       ['ブラ・基本形状',short?['基本タイプ','カップ上端','肩紐の数と形']:['基本タイプ','カップ被覆範囲','カップ上端','カップ縫製','アンダーバンド','肩紐の数と形','背面ストラップ','カップの素材分割']],
+       ['ショーツ・基本形状',short?['基本タイプ','股上','脚ぐり']:['基本タイプ','股上','脚ぐり','前面の形','サイド構造','ウエスト形状','裾の処理']],
+       ['素材・生地表現',short?['主素材','レース種類']:['主素材','副素材','レース種類','ブラの素材配置','ショーツの素材配置']],
+       ['色・配色',short?['主色','副色']:['主色','副色','配色方式','金具色']],
+       ['装飾・モチーフ',short?['主モチーフ']:['主モチーフ','刺繍技法','装飾パーツ','装飾配置']]
+     ]){const t=attributes(v,cat,fs);if(t)lines.push(`${cat}：${t}。`);}
+     if(!short&&ff['衣装の独自アクセント'])lines.push(`衣装アクセント：${ff['衣装の独自アクセント']}。`);
+   });
+   if(n.extra)lines.push(`追加指定：${n.extra}`);
+   if(n.unresolved?.length)lines.push(`要確認：${n.unresolved.map(x=>x.id).join('、')}。`);
+   lines.push('全員の顔を複製せず、自然で印象的な容貌にする。非性的な商業展示。');
+   return lines.join('\n');
+ };
+ const oldBuild=window.build;
+ window.build=function(v,i,extra){
+   const r=oldBuild.apply(this,arguments);
+   if(peopleCount(v)===1){const x=attributes(v,PC,['魅力度','顔の方向性','ヘアカラー技法']);return x?r+'\n人物の魅力：'+x+'。':r;}
+   return r;
+ };
+ // Fix JSON import asynchronous UI refresh: wrap FileReader's completion via a
+ // delegated change listener, avoiding a fragile 150ms timeout.
+ const upload=document.getElementById('file');
+ if(upload)upload.addEventListener('change',()=>{
+   let ticks=0;const check=()=>{if(++ticks>20)return;try{lcRenderPerson();v18Render();v17Sync();v25SyncPose();}catch(e){};};
+   setTimeout(check,0);setTimeout(check,250);
+ });
+})();
+</script>
+<script>
+/* v2.7 opt-in style filters. The legacy path is an exact pass-through when unset. */
+(function(){
+ const catD='装飾・モチーフ', catM='素材・生地表現', catB='ブラ・基本形状', catP='ショーツ・基本形状', catBrand='ブランド・デザイン思想';
+ const k=(c,f)=>c+' / '+f;
+ const D={
+  '装飾量':[['なし'],['少ない'],['標準'],['多い'],['非常に多い']],
+  '主モチーフ':[['なし'],['なし','小花','葉','星','月','蝶','抽象線'],['小花','薔薇','葉','蝶','幾何学','波','月','星','抽象線','なし'],null,null],
+  '刺繍技法':[['なし'],['なし','同色刺繍','平刺繍'],['なし','平刺繍','同色刺繍','銀糸刺繍','金糸刺繍'],null,null],
+  '装飾パーツ':[['なし'],['なし','リボン','ミニチャーム','小さなフリル'],['なし','リボン','ミニチャーム','ビーズ','パール','小さなフリル','花型パーツ'],null,null],
+  '装飾配置':[['中央のみ'],['中央のみ','肩紐','ウエスト','カップ上端'],['中央のみ','肩紐','ウエスト','カップ上端','ショーツ前面','ショーツ両サイド'],null,null]
+ };
+ const M={
+  '副素材':[['なし'],['なし','コットン','チュール','メッシュ','ストレッチレース'],['なし','チュール','メッシュ','ストレッチレース','オーガンジー','サテン','ジャカード','リバーレース'],null,null],
+  'レース種類':[['なし'],['なし','ストレッチレース','ラッセルレース','チュールレース'],['なし','ストレッチレース','ラッセルレース','チュールレース','リバーレース','コードレース','幾何学レース','フローラルレース'],null,null],
+  '表面質感':[['マット','控えめな光沢','細かな凹凸','シボ感'],['マット','控えめな光沢','細かな凹凸','シボ感','パール光沢','織り柄の光沢'],['マット','控えめな光沢','強い光沢','微細ラメ','パール光沢','織り柄の光沢','細かな凹凸'],null,null],
+  '生地配置':[['全面同素材'],['全面同素材','カップと土台で切替','部分レース'],['全面同素材','カップと土台で切替','左右で異素材','中央パネル切替','部分レース','重ね生地'],null,null],
+  'ブラの素材配置':[['カップ全体に主素材'],['カップ全体に主素材','カップ上端にレース','アンダーバンドに副素材'],['カップ全体に主素材','カップ上端にレース','カップ下部にレース','アンダーバンドに副素材','主素材と副素材のパネル切替'],null,null],
+  'ショーツの素材配置':[['前面全体に主素材'],['前面全体に主素材','全体に主素材・縁だけ副素材','ウエスト周辺にレース'],['前面全体に主素材','全体に主素材・縁だけ副素材','ウエスト周辺にレース','脚ぐり沿いにレース','左右のサイドパネルに副素材'],null,null]
+ };
+ // For ornament-heavy levels, keep the entire existing candidate list: this
+ // deliberately preserves the familiar ornate/random high-end combinations.
+ const B={
+  [k(catBrand,'デザインの大胆さ')]:[['控えめ'],['控えめ','標準'],['標準','独創的'],['独創的','非常に独創的'],['非常に独創的']],
+  [k(catB,'カップ被覆範囲')]:[['広い'],['広い','標準'],['標準','やや浅い'],['標準','やや浅い','浅い','左右で非対称'],['やや浅い','浅い','左右で非対称']],
+  [k(catP,'前面被覆範囲')]:[['広い'],['広い','標準'],['標準','やや細身'],['やや細身','細身'],['細身']],
+  [k(catP,'サイド幅')]:[['幅広','標準'],['幅広','標準'],['標準','細幅'],['細幅','極細','左右非対称'],['極細','細幅','左右非対称']],
+  [k(catP,'背面形状')]:[['フルバック','ボーイショーツ型'],['フルバック','セミバック','ボーイショーツ型'],['フルバック','セミバック','ブラジリアン'],['セミバック','ブラジリアン','タンガ','Tバック'],['ブラジリアン','タンガ','Tバック']],
+  [k(catP,'基本タイプ')]:[['スタンダードブリーフ','ヒップスター','ボーイショーツ','ハイウエストブリーフ','タップパンツ'],['スタンダードブリーフ','ヒップスター','ビキニ','フレンチカット','ハイウエストブリーフ','ショート丈キュロット型'],['スタンダードブリーフ','ヒップスター','ビキニ','フレンチカット','ハイレッグ','ローライズブリーフ'],['ビキニ','フレンチカット','ハイレッグ','ブラジリアン','タンガ','サイドストラップ型'],['ハイレッグ','ブラジリアン','タンガ','Tバック','サイドストラップ型']]
+ };
+ // Remove accidentally noncanonical entries (without mutating CATS).
+ for(const [f,levels] of Object.entries(D))for(const a of levels)if(a)for(let i=a.length-1;i>=0;i--)if(!CATS[catD][f].includes(a[i]))a.splice(i,1);
+ for(const [f,levels] of Object.entries(M))for(const a of levels)if(a)for(let i=a.length-1;i>=0;i--)if(!CATS[catM][f].includes(a[i]))a.splice(i,1);
+ const maps={};for(const [f,v] of Object.entries(D))maps[k(catD,f)]={type:'decor',levels:v};for(const [f,v] of Object.entries(M))maps[k(catM,f)]={type:'decor',levels:v};for(const [key,v] of Object.entries(B))maps[key]={type:'bold',levels:v};
+ // Trim secondary decorative trims too; otherwise Lv.1 could still emit
+ // frills, gems or complex lace edges through the bra/brief structural fields.
+ const trim={
+  [k(catB,'トップライン装飾')]:[['装飾なし','細いパイピング'],['装飾なし','細いパイピング','リボンライン'],['装飾なし','細いパイピング','スカラップレース','チュール縁取り','リボンライン'],null,null],
+  [k(catP,'裾の処理')]:[['共布縁取り','シームレス','パイピング'],['共布縁取り','シームレス','パイピング','レース縁取り'],['共布縁取り','シームレス','パイピング','レース縁取り','スカラップ'],null,null],
+  [k(catP,'フロント中央モチーフ')]:[['なし'],['なし','小さなリボン','小さなチャーム'],['なし','小さなリボン','小さなチャーム','縦刺繍'],null,null],
+  [k(catP,'背面装飾')]:[['なし'],['なし','小さなリボン'],['なし','小さなリボン','中央チャーム','中央刺繍'],null,null],
+  [k(catP,'飾りレース配置')]:[['なし'],['なし','ウエスト沿い','脚ぐり沿い'],['なし','ウエスト沿い','脚ぐり沿い','フロント中央','左右サイド'],null,null]
+ };
+ for(const [key,levels] of Object.entries(trim))maps[key]={type:'decor',levels};
+ function conf(){const v=state.v27style||{};return {decor:String(v.decor||''),bold:String(v.bold||'')};}
+ function subset(key){const m=maps[key];if(!m)return null;const lev=Number(conf()[m.type]);if(!lev)return null;return m.levels[lev-1]||null;}
+ function eligible(key){const pool=eligibleFor(key),allowed=subset(key);return allowed?pool.filter(x=>allowed.includes(x.v)):pool;}
+ function chooseWeighted(key){const pool=eligible(key);if(!pool.length)return null;let r=Math.random()*pool.reduce((x,y)=>x+y.w,0);for(const x of pool){r-=x.w;if(r<0)return x.v;}return pool.at(-1).v;}
+ // Preserve originals exactly when both controls are not set.
+ const oldPick=window.weightedPick;
+ window.weightedPick=function(key){return subset(key)?chooseWeighted(key):oldPick.apply(this,arguments);};
+ const oldValueFor=window.valueFor;
+ window.valueFor=function(key,overrides){
+  const allowed=subset(key);if(!allowed)return oldValueFor.apply(this,arguments);
+  const candidate=overrides?.[key];if(candidate&&eligible(key).some(x=>x.v===candidate))return candidate;
+  const chosen=chooseWeighted(key);if(chosen===null)throw Error('装飾/大胆さの指定と候補プールが両立しません：'+key);
+  return chosen;
+ };
+ function conflicts(values){const errs=[];for(const [key,meta] of Object.entries(maps)){
+  const allowed=subset(key);if(!allowed)continue;const value=values[key];if(value&& !allowed.includes(value)&&state.locks[key])errs.push(key+'：'+value);
+ }return errs;}
+ function scrub(values){if(!values)return;for(const key of Object.keys(maps)){
+  const allowed=subset(key);if(!allowed||state.locks[key])continue;
+  if(values[key]&&!allowed.includes(values[key]))delete values[key];
+ }if(values.__lcPeople)delete values.__lcPeople;}
+ function refresh(){document.getElementById('v27decor').value=conf().decor;document.getElementById('v27bold').value=conf().bold;
+  const list=conflicts(state.values);document.getElementById('v27notice').textContent=list.length?'🔒 固定条件と指定レベルが衝突（固定優先）：'+list.join(' ／ '):'装飾と大胆さは独立。選択範囲内でランダム抽選します。色・人物・会場は制限しません。';}
+ window.v27Change=function(type,val){state.v27style??={decor:'',bold:''};state.v27style[type]=val;
+  // Clear only the relevant unlocked fields, leaving other dimensions untouched.
+  for(const [key,meta] of Object.entries(maps))if(meta.type===type&&!state.locks[key])delete state.values[key];
+  delete state.values.__lcPeople;save();refresh();if(typeof lcRenderPerson==='function')lcRenderPerson();};
+ window.v27Clear=function(){v27Change('decor','');v27Change('bold','');};
+ // For multi-people, roll may be detached from common fields. Re-apply filters
+ // to saved fixed/explicit values at output time, without mutating user locks.
+ const oldSnapshot=window.snapshot;
+ window.snapshot=function(...args){const vals=oldSnapshot.apply(this,args);for(const [key] of Object.entries(maps)){
+    if(state.locks[key])continue;const allowed=subset(key);if(!allowed)continue;
+    if(!allowed.includes(vals[key]))vals[key]=window.valueFor(key,{});
+  }
+  if(Array.isArray(vals.__lcPeople))for(const person of vals.__lcPeople)for(const [key,meta] of Object.entries(maps)){
+    const allowed=subset(key);if(!allowed||state.locks[key]||person.locks?.[key])continue;
+    if(!allowed.includes(person.values[key]))person.values[key]=window.valueFor(key,{});
+  }
+  return vals;};
+ // Add controls to stored presets. JSON and localStorage already serialize state.
+ const oldSavePreset=window.savePreset;
+ window.savePreset=function(...args){const n=state.presets.length,ret=oldSavePreset.apply(this,args);if(state.presets.length>n){state.presets.at(-1).v27style={...conf()};save();}return ret;};
+ const oldRestorePreset=window.restorePreset;
+ window.restorePreset=function(i){const ret=oldRestorePreset.apply(this,arguments);state.v27style={decor:'',bold:'',...(state.presets[i]?.v27style||{})};save();refresh();return ret;};
+ const oldReset=window.resetAll;
+ window.resetAll=function(...args){const ret=oldReset.apply(this,args);if(!Object.keys(state.values).length){state.v27style={decor:'',bold:''};save();}refresh();return ret;};
+ const oldBuild=window.build;
+ window.build=function(v,i,extra){let result=oldBuild.apply(this,arguments);const c=conf();if(!c.decor&&!c.bold)return result;
+   const instructions=[];
+   if(c.decor)instructions.push('装飾具合Lv.'+c.decor+'を優先し、指定した範囲内でレース・刺繍・装飾品をランダムにする');
+   if(c.bold)instructions.push('衣装の大胆さLv.'+c.bold+'を優先し、シルエット・被覆範囲のみ制御する');
+   return result+'\n【v2.7任意スタイル指定】'+instructions.join('。')+'。色と配色は従来どおりランダム。二つのレベルは独立。固定条件は優先。';};
+ const oldFormat=window.v18Format;
+ window.v18Format=function(n,mode){let out=oldFormat.apply(this,arguments);const c=conf();if(!c.decor&&!c.bold)return out;
+   out+='\n【v2.7 任意スタイル】'+(c.decor?'装飾Lv.'+c.decor+'（装飾品など範囲内でランダム） ':'')+(c.bold?'大胆さLv.'+c.bold+'（被覆とシルエットのみ） ':'')+'。両設定は独立、色・配色は制限しない。';
+   const locked=conflicts(n.original||{});if(locked.length)out+='\n要確認（🔒固定優先）：'+locked.join('／');return out;};
+ const oldRoll=window.roll;window.roll=function(...args){const result=oldRoll.apply(this,args);refresh();return result;};
+ const oldGenerate=window.generate;window.generate=function(...args){const ret=oldGenerate.apply(this,args);refresh();return ret;};
+ const input=document.getElementById('file');if(input)input.addEventListener('change',()=>setTimeout(refresh,300));
+ state.v27style={decor:'',bold:'',...(state.v27style||{})};refresh();
+})();
+</script>
+<script>
+/* v2.8.1: Direction-first appearance output. Sampling, weights, garments and v2.7 controls unchanged. */
+(function(){
+ 'use strict';
+ const category='人物・スタイリング';
+ const at=(v,f)=>v?.[category+' / '+f]||'';
+ const personality={
+  '王道可愛い系':'愛嬌のある自然な可愛らしさと明るい親しみやすさ',
+  '清楚可愛い系':'透明感のある優しい雰囲気と上品な愛らしさ',
+  'アイドル可愛い系':'生き生きした表情と華やかな愛嬌',
+  '童顔可愛い系':'成人女性らしさを保ちながら、柔らかな輪郭とあどけない愛らしさ',
+  '大人可愛い系':'上品で落ち着いた魅力と、自然な愛らしさ',
+  '小悪魔可愛い系':'いたずらっぽい表情と魅力的な遊び心',
+  'ナチュラル可愛い系':'飾らない雰囲気と素直な笑顔の愛らしさ',
+  'ドーリー可愛い系':'人形のように整った印象と柔らかな可愛らしさ',
+  '王道美人系':'均整の取れた顔立ちと洗練された美貌',
+  '清楚美人系':'透明感と凛とした上品な美しさ',
+  '華やか美人系':'存在感のある華やかな顔立ちと印象的な美しさ',
+  '知的美人系':'落ち着いた知性と端正な美しさ',
+  'エレガント系':'気品としなやかさを感じる洗練された美しさ',
+  'クールビューティー系':'涼しげな目元と凛とした端正な美しさ',
+  'ナチュラル美人系':'自然体の上品さと健康的で整った美しさ',
+  'ミステリアス系':'静かな存在感と奥行きを感じる表情',
+  'ヘルシー系':'健康的で爽やかな笑顔と明るい魅力',
+  'アクティブ系':'活発で自然な表情とエネルギッシュな魅力',
+  'ギャル系':'明るく華やかな表情と自信のある魅力',
+  '姫ギャル系':'甘く華やかなスタイリングとドーリーな可愛らしさ',
+  '大人ギャル系':'成熟した華やかさと親しみやすい魅力',
+  'モードギャル系':'都会的で洗練されたクールな華やかさ',
+  'ナチュラルギャル系':'抜け感のある自然な華やかさと愛嬌',
+  '韓国アイドル系':'洗練されたステージ映えする華やかさと爽やかな愛嬌'
+ };
+ const levelHint={
+  '2':'その方向性に沿った自然で親しみやすい魅力',
+  '3':'その方向性が伝わる整った顔立ちと印象に残る魅力',
+  '4':'その方向性の魅力が際立つ、非常に魅力的なファッションモデルの存在感',
+  '5':'その方向性の魅力を最大限に引き出した、圧倒的に印象に残る存在感'
+ };
+ const extractLevel=v=>String(v||'').match(/Lv\.?\s*([2-5])/)?.[1]||'';
+ const facePriority=(values,feature)=>{
+   const lvl=extractLevel(at(values,'魅力度'));
+   const dir=at(values,'顔の方向性');
+   const impression=personality[dir]||(dir?dir+'にふさわしい自然な魅力':'自然で印象的な魅力');
+   const mood=at(values,'表情');
+   const outline=at(values,'輪郭');
+   const face=at(values,'顔立ち');
+   const parts=['顔の方向性を最優先：'+impression];
+   if(lvl)parts.push('魅力度Lv.'+lvl+'：'+levelHint[lvl]+'。可愛い方向性を美人系に、美人方向性を可愛い系に置き換えない');
+   if(outline)parts.push('輪郭：'+outline+'（自然な個人差として表現）');
+   if(face)parts.push('顔立ちの印象：'+face);
+   if(mood)parts.push('表情「'+mood+'」を守り、生き生きした目元と自然な口元にする');
+   parts.push('成人女性としての自然な骨格、目元と口元の調和、自然な肌の質感を優先');
+   parts.push('顔の方向性と矛盾する画一的なトップモデル顔に寄せない');
+   parts.push('複数人なら各人物の輪郭・目元・表情を区別し、コピー顔にしない');
+   return parts.join('。')+'。';
+ };
+ // Add priority guidance immediately after each per-person label in practical/short outputs;
+ // keep original sampled details, but tell the image model which instructions to favor.
+ const oldFormat=window.v18Format;
+ window.v18Format=function(n,mode){
+   let out=oldFormat.apply(this,arguments);
+   if(mode==='issues')return out;
+   const original=n?.original||{}, ppl=original.__lcPeople;
+   if(Array.isArray(ppl)&&ppl.length>=2&&state.lcPeople?.enabled!==false){
+     for(let i=0;i<ppl.length;i++){
+       const person=ppl[i];const values={...(n?.resolved||original),...(person.values||{})};
+       const re=new RegExp('(■ 人物'+ 'ABC'[i] +'（画面[^\\n]*）\\n)');
+       out=out.replace(re, '$1'+'【顔の表現優先】'+facePriority(values,person.features||{})+'\n');
+     }
+   }else{
+     const v=n?.resolved||original;
+     out+='\n【顔の表現優先】'+facePriority(v,{});
+   }
+   return out;
+ };
+ // Detailed prompt receives the same rule; sampled values and weights are unmodified.
+ const oldBuild=window.build;
+ window.build=function(v,i,extra){
+   let out=oldBuild.apply(this,arguments);
+   if(Array.isArray(v?.__lcPeople)&&v.__lcPeople.length>=2&&state.lcPeople?.enabled!==false){
+     const lines=v.__lcPeople.map((p,j)=>'人物'+ 'ABC'[j] +'：'+facePriority({...v,...(p.values||{})},p.features||{}));
+     return out+'\n【v2.8 顔の表現優先】\n'+lines.join('\n');
+   }
+   return out+'\n【v2.8 顔の表現優先】'+facePriority(v,{});
+ };
+})();
+</script>
+
+<script>
+/* v2.8.1 migration: preserve locks, pool weights, per-person overrides and presets. */
+(function(){
+ 'use strict';
+ const PC='人物・スタイリング / ';
+ const aliases={'可愛い系':'王道可愛い系','華やか系':'華やか美人系','清楚系':'清楚可愛い系','小悪魔系':'小悪魔可愛い系','王道ギャル系':'ギャル系','美人系':'王道美人系'};
+ const levelMap={'2':'Lv.2｜自然で親しみやすい魅力','3':'Lv.3｜整った顔立ちで印象に残る魅力','4':'Lv.4｜方向性が際立つ非常に魅力的なモデル','5':'Lv.5｜方向性の魅力を最大限に引き出した存在感'};
+ const shapes=new Set(['丸顔','卵型','面長','シャープ','シャープな輪郭']);
+ const faceMap={'柔らかい':'柔らかな印象','柔らかな顔立ち':'柔らかな印象','知的':'知的な印象','クール':'凛とした印象','華やか':'華やかな印象','ナチュラルな印象':'ナチュラルな印象','シャープ':'凛とした印象','シャープな輪郭':'凛とした印象'};
+ function migrateValues(values,locks){
+  if(!values||typeof values!=='object')return;
+  const dir=PC+'顔の方向性',lv=PC+'魅力度',face=PC+'顔立ち',outline=PC+'輪郭';
+  if(aliases[values[dir]])values[dir]=aliases[values[dir]];
+  const match=String(values[lv]||'').match(/Lv\.?\s*([2-5])/);
+  if(match)values[lv]=levelMap[match[1]];
+  if(shapes.has(values[face])){
+   if(!values[outline])values[outline]=values[face]==='シャープ'||values[face]==='シャープな輪郭'?'ややシャープ':values[face];
+   // The old face-field lock represented a contour, not a personality. Transfer that lock.
+   if(locks?.[face]){locks[outline]=true;delete locks[face];}
+   values[face]=faceMap[values[face]]||'ナチュラルな印象';
+  }else if(faceMap[values[face]])values[face]=faceMap[values[face]];
+  if(Array.isArray(values.__lcPeople))values.__lcPeople.forEach(p=>migrateValues(p.values,p.locks));
+ }
+ function migratePool(rules){if(!rules)return;
+  const remap=(key,aliases)=>{const r=rules[key];if(!r)return;for(const [oldV,newV] of Object.entries(aliases))if(r[oldV]&&!r[newV]){r[newV]=r[oldV];delete r[oldV];}};
+  remap(PC+'顔の方向性',aliases);
+  const r=rules[PC+'魅力度'];if(r)for(const [k,v] of Object.entries({...r})){const level=String(k).match(/Lv\.?\s*([2-5])/);if(level&&!r[levelMap[level[1]]]){r[levelMap[level[1]]]=v;delete r[k];}}
+ }
+ function migrateState(){
+  migrateValues(state.values,state.locks);
+  (state.presets||[]).forEach(p=>{migrateValues(p.values,p.locks);migratePool(p.poolRules)});
+  (state.history||[]).forEach(h=>migrateValues(h.values));
+  const people=state.lcPeople;
+  if(people){(people.overrides||[]).forEach((v,i)=>migrateValues(v,people.locks?.[i]));(people.features||[]).forEach(migrateValues)}
+  migratePool(state.poolRules);
+  save();
+ }
+ window.v28Migrate=migrateState;
+ migrateState();
+ for(const name of ['restorePreset','restoreHistory','generate','roll']){
+  const old=window[name];if(typeof old!=='function')continue;
+  window[name]=function(...args){
+   if(name==='generate'||name==='roll')migrateState();
+   const ret=old.apply(this,args);
+   if(name==='restorePreset'||name==='restoreHistory'){migrateState();renderOther();if(typeof v17Sync==='function')v17Sync();}
+   return ret;
+  };
+ }
+ // FileReader is async: intercept the parsed file via a temporary onload wrapping is not reliable;
+ // migrate on the next user action and make the imported state immediately visible.
+ // loadJSON invokes v28Migrate from its FileReader.onload after parsing, before saving.
+})();
+</script>
+</body></html>
