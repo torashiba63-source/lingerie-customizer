@@ -1,0 +1,26 @@
+{
+  "name": "Lingerie Customizer v2.10.0",
+  "short_name": "LC v2.10",
+  "description": "抽選結果を保持したまま、構図・ポーズ・衣装の整合性を監査する画像生成プロンプトツール。",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f4f7",
+  "theme_color": "#282234",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
