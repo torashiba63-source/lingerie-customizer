@@ -1,0 +1,26 @@
+{
+  "name": "Lingerie Customizer v2.14.0",
+  "short_name": "LC v2.14",
+  "description": "複数人の撮影目的、家具、小物配置を整合させる画像生成プロンプトツール。",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f4f7",
+  "theme_color": "#282234",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
