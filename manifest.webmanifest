@@ -1,0 +1,26 @@
+{
+  "name": "Lingerie Customizer v2.22.2",
+  "short_name": "LC v2.22.2",
+  "description": "自然な手の動き8種類、仕事中の動作5種類を追加。手・姿勢・業務・小物の整合性を改善。紹介ポーズ132種類と旧設定互換を維持。",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f4f7",
+  "theme_color": "#282234",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
