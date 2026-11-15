@@ -1,0 +1,26 @@
+{
+  "name": "Lingerie Customizer v2.25.1",
+  "short_name": "LC v2.25.1",
+  "description": "紹介ポーズ・手腕の競合判定・固定条件保護とスマホ表示改善 v2.25.1",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f4f7",
+  "theme_color": "#282234",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
