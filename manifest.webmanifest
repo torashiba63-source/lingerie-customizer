@@ -1,0 +1,26 @@
+{
+  "name": "Lingerie Customizer v2.19.1",
+  "short_name": "LC v2.19.1",
+  "description": "複数人の抽選・除外制御、業務連動、手動設定保護を修正した安定化版",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f4f7",
+  "theme_color": "#282234",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
