@@ -1,0 +1,26 @@
+{
+  "name": "Lingerie Customizer v2.26.1",
+  "short_name": "LC v2.26.1",
+  "description": "自撮り時の手・ポーズ整合、撮影方式切替、衣装の競合修正 v2.26.1",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f4f7",
+  "theme_color": "#282234",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
