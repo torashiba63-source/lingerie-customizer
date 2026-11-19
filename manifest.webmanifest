@@ -1,0 +1,26 @@
+{
+  "name": "Lingerie Customizer v2.32.1",
+  "short_name": "LC v2.32.1",
+  "description": "既存157項目を維持し、意味の重複10組を統合・配置1件を明確化。新規96候補を保持。",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f4f7",
+  "theme_color": "#282234",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
