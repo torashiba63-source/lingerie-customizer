@@ -1,0 +1,26 @@
+{
+  "name": "Lingerie Customizer v2.37.1",
+  "short_name": "LC v2.37.1",
+  "description": "157項目・3,081候補を維持。人物別の構造・素材・撮影の矛盾チェックを強化。通常撮影・自撮りの二段階抽選を維持。",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f4f7",
+  "theme_color": "#282234",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

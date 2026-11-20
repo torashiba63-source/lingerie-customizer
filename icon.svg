@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Lingerie Customizer LC logo">
+  <defs>
+    <linearGradient id="background" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#5c466a"/>
+      <stop offset="1" stop-color="#30283e"/>
+    </linearGradient>
+    <linearGradient id="ornament" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f7d9e8"/>
+      <stop offset="1" stop-color="#bda2cc"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#background)"/>
+  <g fill="none" stroke="url(#ornament)" stroke-width="6" stroke-linecap="round">
+    <path d="M256 80 432 256 256 432 80 256Z"/>
+    <path d="M256 112 400 256 256 400 112 256Z" stroke-width="2" opacity=".5"/>
+    <path d="M256 80v34M256 398v34M80 256h34M398 256h34"/>
+  </g>
+  <circle cx="256" cy="256" r="124" fill="#40324e" stroke="#f0d2e1" stroke-width="3"/>
+  <path d="M235 158q21-34 42 0-21 24-42 0ZM235 354q21-34 42 0-21 24-42 0Z" fill="url(#ornament)" opacity=".88"/>
+  <text x="256" y="280" text-anchor="middle" font-family="DejaVu Sans,sans-serif" font-weight="700" font-size="114" letter-spacing="-8" fill="#fff8fd">LC</text>
+</svg>
